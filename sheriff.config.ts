@@ -34,10 +34,12 @@ export const config: SheriffConfig = {
   depRules: {
     'domain:*': [sameTag, 'domain:shared'],
 
-    'type:domain': [sameTag],
-    'type:application': [sameTag, 'type:domain'],
-    'type:infrastructure': [sameTag, 'type:domain', 'type:application'],
-    'type:presentation': [sameTag, 'type:domain', 'type:application', 'type:infrastructure'],
+    'type:domain': [sameTag, 'type:utils'],
+    'type:application': [sameTag, 'type:domain', 'type:utils'],
+    'type:infrastructure': [sameTag, 'type:domain', 'type:application', 'type:utils'],
+    'type:presentation': [sameTag, 'type:domain', 'type:application', 'type:infrastructure', 'type:ui', 'type:utils'],
+    'type:ui': [sameTag, 'type:domain'],
+    'type:utils': [sameTag, 'type:domain'],
     'type:page': ['type:presentation'],
 
     root: ['domain:*', 'type:page'],

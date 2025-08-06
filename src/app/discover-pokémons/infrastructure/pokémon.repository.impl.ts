@@ -2,6 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Pokémon, PokémonRepository } from "../domain";
 import { HttpClient } from "@angular/common/http";
 import { bufferCount, firstValueFrom, map, merge, OperatorFunction, switchMap, tap } from 'rxjs';
+import { CacheAsyncByParams } from "@shared/utils";
 
 /**
  * DTO for the Pokémon API response of list endpoints.
@@ -51,25 +52,6 @@ const dtoToPokémon = (dto: PokémonDetailDTO): Pokémon => new Pokémon(
  * rxjs mapper for PokémonDetailDTO to Pokémon entity
  */
 const mapDtoToPokémon: () => OperatorFunction<PokémonDetailDTO, Pokémon> = () => source => source.pipe(map(dtoToPokémon));
-
-/**
- * rxjs mapper for a List of PokémonDetailDTOs to Pokémon entities
- */
-// const mapDtoListToPokémonList: () => OperatorFunction<PokémonDetailDTO[], Pokémon[]> = () => source => source.pipe(map(list => list.map(dtoToPokémon)));
-
-const CacheAsyncByParams: () => MethodDecorator = <T, Result = unknown> () => (_target: T, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-  const cacheByRequestUri = new Map<string, Result[]>();
-  const originalMethod = descriptor.value;
-  descriptor.value = async function(...args: unknown[]) {
-    const cacheKey = `${String(propertyKey)}-${JSON.stringify(args)}`;
-    if (cacheByRequestUri.has(cacheKey)) {
-      return cacheByRequestUri.get(cacheKey)!;
-    }
-    const result = await originalMethod.apply(this, args);
-    cacheByRequestUri.set(cacheKey, result);
-    return result;
-  };
-};
 
 /**
  * Repository implementation for fetching Pokémon data from the API using angular HttpClient.
