@@ -1,20 +1,45 @@
-import { SheriffConfig } from '@softarc/sheriff-core';
+import { sameTag, SheriffConfig } from '@softarc/sheriff-core';
 
 /**
-  * Minimal configuration for Sheriff
-  * Assigns the 'noTag' tag to all modules and
-  * allows all modules to depend on each other.
-  */
+ * Clean Architecture Configuration for Sheriff
+ *
+ * This configuration enforces Clean Architecture principles:
+ * - Domain layer (entities, use cases) has no dependencies on outer layers
+ * - Application layer can depend on domain layer
+ * - Infrastructure layer can depend on domain and application layers
+ * - Presentation layer can depend on all inner layers
+ *
+ * Layers (from inner to outer):
+ * 1. Domain (entities, value objects, domain services)
+ * 2. Application (use cases, application services, ports)
+ * 3. Infrastructure (repositories, adapters, external services)
+ * 4. Presentation (components, controllers, UI logic)
+ */
 
 export const config: SheriffConfig = {
   enableBarrelLess: true,
-  modules: {}, // apply tags to your modules
+  modules: {
+    'src/app/shared/*': ['domain:shared', 'type:ui'],
+    /**
+     * Samples
+     * - src/app/bookings (domain:bookings)
+     *   - ./domain (domain:bookings, type:domain)
+     *   - ./application (domain:bookings, type:application)
+     *   - ./infrastructure (domain:bookings, type:infrastructure)
+     *   - ./presentation (domain:bookings, type:presentation)
+     *   - ./page (domain:bookings, type:page)
+     */
+    'src/app/<domain>/<type>': ['domain:<domain>', 'type:<type>'],
+  }, // apply tags to your modules
   depRules: {
-    // root is a virtual module, which contains all files not being part
-    // of any module, e.g. application shell, main.ts, etc.
-    'root': 'noTag',
-    'noTag': 'noTag',
+    'domain:*': [sameTag, 'domain:shared'],
 
-    // add your dependency rules here
+    'type:domain': [sameTag],
+    'type:application': [sameTag, 'type:domain'],
+    'type:infrastructure': [sameTag, 'type:domain', 'type:application'],
+    'type:presentation': [sameTag, 'type:domain', 'type:application', 'type:infrastructure'],
+    'type:page': ['type:presentation'],
+
+    root: ['domain:*', 'type:page'],
   },
 };
