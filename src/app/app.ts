@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GetAllPokémonUseCase } from './discover-pokémons/application';
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { from, tap } from 'rxjs';
+import { PokemonList } from '@discover-pokémons/presentation';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, NgOptimizedImage, RouterOutlet],
+  imports: [PokemonList, RouterOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.html',
   styleUrl: './app.scss'

@@ -1,0 +1,7 @@
+<ul>
+  @for(pokemon of (pokemonList | async); track pokemon.name) {
+    <li>
+      <img [ngSrc]="pokemon.shinyImgUrl" width="256" height="256" [attr.alt]="pokemon.name" />
+    </li>
+  }
+</ul>
