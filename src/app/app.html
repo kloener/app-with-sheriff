@@ -1,1 +1,8 @@
+<ul class="flex flex-wrap gap-4">
+  @for(pokemon of (debug | async); track pokemon.name) {
+    <li>
+      <img [ngSrc]="pokemon.shinyImgUrl" width="256" height="256" [attr.alt]="pokemon.name" />
+    </li>
+  }
+</ul>
 <router-outlet/>
