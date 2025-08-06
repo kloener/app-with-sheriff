@@ -1,23 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render } from '@testing-library/angular';
 import { PokemonFullImage } from './pokemon-full-image';
+import { screen } from '@testing-library/dom';
+import { Pokémon } from '@discover-pokémons/domain';
 
 describe('PokemonFullImage', () => {
-  let component: PokemonFullImage;
-  let fixture: ComponentFixture<PokemonFullImage>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [PokemonFullImage]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(PokemonFullImage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  const setup = () => render(PokemonFullImage, {
+    inputs: {
+      pokemon: new Pokémon(
+        '_id', //: string,
+        '_name', //: string,
+        1, //: number,
+        50, //: number,
+        50, //: number,
+        '_frontImgUrl', //: string,
+        '_backImgUrl', //: string,
+        '_shinyImgUrl', //: string)
+      )
+    },
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    await setup();
+    expect(screen.getByRole('img')).not.toBeNull();
   });
 });
