@@ -15,7 +15,7 @@ describe('PokemonList', () => {
       ],
     });
 
-  it('should create', async () => {
+  it('should an empty list', async () => {
     const screen = await setup();
 
     expect(screen.queryByRole('list')).not.toBeNull();
