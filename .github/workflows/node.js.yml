@@ -34,10 +34,12 @@ jobs:
 
   build:
     needs: install
+    name: "run ${{ matrix.command }}"
 
     strategy:
+      fail-fast: true
       matrix:
-        commands: [ build, lint, test ]
+        command: [ build, lint, test ]
 
     runs-on: ubuntu-latest
 
@@ -60,6 +62,6 @@ jobs:
           ${{ runner.os }}-
           npm-
 
-    - run: npm run ${{ matrix.commands }}
+    - run: npm run ${{ matrix.command }}
       env:
         CI: true
