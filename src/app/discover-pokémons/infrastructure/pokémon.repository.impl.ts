@@ -1,39 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { Pokémon, PokémonRepository } from '../domain';
 import { HttpClient } from '@angular/common/http';
-import {
-  bufferCount,
-  firstValueFrom,
-  map,
-  merge,
-  OperatorFunction,
-  switchMap,
-} from 'rxjs';
+import { bufferCount, firstValueFrom, map, merge, switchMap } from 'rxjs';
 import { CacheAsyncByParams } from '@shared/utils';
 import { PokémonDetailDTO } from './PokémonDetailDTO';
 import { PokémonItemDTO } from './PokémonItemDTO';
-
-/**
- * maps PokémonDetailDTO to Pokémon entity
- */
-const dtoToPokémon = (dto: PokémonDetailDTO): Pokémon =>
-  new Pokémon(
-    String(dto.id),
-    dto.name,
-    dto.order,
-    dto.height,
-    dto.weight,
-    dto.sprites.front_default,
-    dto.sprites.back_default,
-    dto.sprites.other['official-artwork'].front_default,
-  );
-
-/**
- * rxjs mapper for PokémonDetailDTO to Pokémon entity
- */
-const mapDtoToPokémon: () => OperatorFunction<PokémonDetailDTO, Pokémon> =
-  () => (source) =>
-    source.pipe(map(dtoToPokémon));
+import { mapDtoToPokémon } from './mapDtoToPokémon';
 
 /**
  * Repository implementation for fetching Pokémon data from the API using angular HttpClient.
