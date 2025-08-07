@@ -1,23 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PokemonList } from './pokemon-list';
+import { GetAllPokémonUseCase } from '@discover-pokémons/application';
+import { render } from '@testing-library/angular';
 
 describe('PokemonList', () => {
-  let component: PokemonList;
-  let fixture: ComponentFixture<PokemonList>;
+  const setup = () =>
+    render(PokemonList, {
+      providers: [
+        {
+          provide: GetAllPokémonUseCase,
+          useValue: { execute: () => Promise.resolve([]) },
+        },
+      ],
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [PokemonList]
-    })
-    .compileComponents();
+  it('should create', async () => {
+    const screen = await setup();
 
-    fixture = TestBed.createComponent(PokemonList);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(screen.queryByRole('list')).not.toBeNull();
   });
 });
