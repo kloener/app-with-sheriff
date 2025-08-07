@@ -1,10 +1,12 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+import { Pokémon } from '@discover-pokémons/domain';
 import { render } from '@testing-library/angular';
 import { PokemonFullImage } from './pokemon-full-image';
-import { Pokémon } from '@discover-pokémons/domain';
 
 describe('PokemonFullImage', () => {
   const setup = () =>
     render(PokemonFullImage, {
+      providers: [provideZonelessChangeDetection()],
       inputs: {
         pokemon: new Pokémon(
           '_id', //: string,

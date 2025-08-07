@@ -1,11 +1,11 @@
-import { inject, Injectable } from '@angular/core';
-import { Pokémon, PokémonRepository } from '../domain';
 import { HttpClient } from '@angular/common/http';
-import { bufferCount, firstValueFrom, map, merge, switchMap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { CacheAsyncByParams } from '@shared/utils';
+import { bufferCount, firstValueFrom, map, merge, of, switchMap } from 'rxjs';
+import { Pokémon, PokémonRepository } from '../domain';
+import { mapDtoToPokémon } from './mapDtoToPokémon';
 import { PokémonDetailDTO } from './PokémonDetailDTO';
 import { PokémonItemDTO } from './PokémonItemDTO';
-import { mapDtoToPokémon } from './mapDtoToPokémon';
 
 /**
  * Repository implementation for fetching Pokémon data from the API using angular HttpClient.
@@ -27,6 +27,9 @@ export class HttpPokémonRepository implements PokémonRepository {
       this.http.get<{ results: PokémonItemDTO[] }>(requestUri).pipe(
         map((response) => response.results),
         switchMap((results) => {
+          if (results.length === 0) {
+            return of([]);
+          }
           const detailRequests = results.map((item) =>
             this.findById(item.name),
           );

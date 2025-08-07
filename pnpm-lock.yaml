@@ -117,9 +117,6 @@ importers:
       typescript-eslint:
         specifier: ^8.39.0
         version: 8.39.0(eslint@9.32.0(jiti@2.5.1))(typescript@5.8.3)
-      zone.js:
-        specifier: ^0.15.1
-        version: 0.15.1
 
 packages:
 
@@ -7572,6 +7569,7 @@ snapshots:
 
   zod@3.25.76: {}
 
-  zone.js@0.15.1: {}
+  zone.js@0.15.1:
+    optional: true
 
   zwitch@2.0.4: {}

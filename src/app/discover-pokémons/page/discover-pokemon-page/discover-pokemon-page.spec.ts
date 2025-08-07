@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { GetAllPokémonUseCase } from '@discover-pokémons/application';
 import { Pokémon } from '@discover-pokémons/domain';
 import { render } from '@testing-library/angular';
@@ -8,6 +9,7 @@ describe('DiscoverPokemonPage', () => {
   const setup = () =>
     render(DiscoverPokemonPage, {
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: GetAllPokémonUseCase,
           useFactory: () =>

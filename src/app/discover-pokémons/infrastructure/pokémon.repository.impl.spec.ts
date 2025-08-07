@@ -1,20 +1,25 @@
-import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import {
-  provideHttpClientTesting,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { HttpPokémonRepository } from './pokémon.repository.impl';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { dtoToPokémon } from './dtoToPokémon';
-import mockPokemonListResponse from './mock-pokemon-list-response';
 import mockPokemonDetailResponse from './mock-pokemon-detail-response';
+import mockPokemonListResponse from './mock-pokemon-list-response';
+import { HttpPokémonRepository } from './pokémon.repository.impl';
 
 describe('HttpPokémonRepository', () => {
   let httpController: HttpTestingController;
   let repository: HttpPokémonRepository;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     });
 
     httpController = TestBed.inject(HttpTestingController);
