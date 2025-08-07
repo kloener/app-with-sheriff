@@ -69,4 +69,4 @@ Links to pnpm, clean architecture, Sheriff and DDD documentation:
 - [pnpm Documentation](https://pnpm.io/)
 - [Clean Architecture Documentation](https://www.geeksforgeeks.org/system-design/complete-guide-to-clean-architecture/)
 - [Sheriff Documentation](https://sheriff.softarc.io/docs/introduction)
-- [Domain-Driven Design Documentation](https://www.domainlanguage.com/ddd/)
+- [Domain-Driven Design Documentation](https://www.domainlanguage.com/ddd/) and [All about DDD for Angular & Frontend Architectures](https://www.angulararchitects.io/blog/all-about-ddd-for-frontend-architectures-with-angular-co/) from Angular Architects
