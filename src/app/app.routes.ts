@@ -8,8 +8,8 @@ export const routes: Routes = [
   },
   {
     path: 'discover-pokemons',
-    loadComponent: () =>
-      import('./discover-pokémons/page').then((m) => m.DiscoverPokemonPage),
+    loadChildren: () =>
+      import('./discover-pokémons/public_api').then((m) => m.routes),
   },
   {
     path: '**',

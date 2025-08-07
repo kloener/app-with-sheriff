@@ -19,7 +19,6 @@ import { sameTag, SheriffConfig } from '@softarc/sheriff-core';
 export const config: SheriffConfig = {
   enableBarrelLess: true,
   modules: {
-    'src/app/shared/*': ['domain:shared', 'type:ui'],
     /**
      * Samples
      * - src/app/bookings (domain:bookings)
@@ -34,7 +33,13 @@ export const config: SheriffConfig = {
   depRules: {
     'domain:*': [sameTag, 'domain:shared'],
 
-    'type:public_api': [sameTag, 'type:application', 'type:infrastructure'],
+    'type:public_api': [
+      sameTag,
+      'type:domain',
+      'type:application',
+      'type:infrastructure',
+      'type:page',
+    ],
     'type:domain': [sameTag, 'type:utils'],
     'type:application': [sameTag, 'type:domain', 'type:utils'],
     'type:infrastructure': [
@@ -60,6 +65,6 @@ export const config: SheriffConfig = {
     'type:ui': [sameTag, 'type:domain'],
     'type:utils': [sameTag, 'type:domain'],
 
-    root: ['domain:*', 'type:page'],
+    root: ['domain:*', 'type:public_api', 'type:page'],
   },
 };
