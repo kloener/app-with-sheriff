@@ -1,27 +1,50 @@
 import { provideZonelessChangeDetection } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { routes } from '@app/app.routes';
+import { GetAllPokémonUseCase } from '@discover-pokémons/application';
+import { Pokémon } from '@discover-pokémons/domain';
+import { render } from '@testing-library/angular';
 import { App } from './app';
 
 describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
-      providers: [provideZonelessChangeDetection()],
-    }).compileComponents();
+  const setup = () => {
+    return render(App, {
+      providers: [
+        provideZonelessChangeDetection(),
+        provideRouter(routes),
+        {
+          provide: GetAllPokémonUseCase,
+          useValue: {
+            execute: () =>
+              Promise.resolve([
+                new Pokémon(
+                  '1',
+                  'Bulbasaur',
+                  1,
+                  45,
+                  49,
+                  'https://example.com/bulbasaur.png?1',
+                  'https://example.com/bulbasaur.png?2',
+                  'https://example.com/bulbasaur.png?3',
+                ),
+              ]),
+          },
+        },
+      ],
+    });
+  };
+
+  it('should render title', async () => {
+    const { findByText } = await setup();
+
+    expect(await findByText('Discover Pokémons')).toBeTruthy();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  it('should render pokémons', async () => {
+    const { findByRole } = await setup();
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Hello, app-with-sheriff',
-    );
+    expect(await findByRole('list')).toBeTruthy();
+    expect(await findByRole('listitem')).toBeTruthy();
+    expect(await findByRole('img')).toBeTruthy();
   });
 });

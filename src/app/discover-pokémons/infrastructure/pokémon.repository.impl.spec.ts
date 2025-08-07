@@ -25,13 +25,13 @@ describe('HttpPokémonRepository', () => {
     httpController.verify();
   });
 
-  it('should fetch Pokémon list and their details', async () => {
+  it('should fetch Pokémon list and their details and map it to Pokémon entities', async () => {
     // Arrange
     const mockResponseList = mockPokemonListResponse;
     const mockResponseBulbasaur = mockPokemonDetailResponse('bulbasaur')!;
     const mockResponseIvysaur = mockPokemonDetailResponse('ivysaur')!;
     const mockResponseVenusaur = mockPokemonDetailResponse('venusaur')!;
-    const promise = repository.findAll(1, 20);
+    const promise = repository.findAll(1);
 
     // Act
     httpController
@@ -56,5 +56,18 @@ describe('HttpPokémonRepository', () => {
       dtoToPokémon(mockResponseIvysaur),
       dtoToPokémon(mockResponseVenusaur),
     ]);
+  });
+
+  it('should return null when Pokémon not found', async () => {
+    // Arrange
+    const promise = repository.findById('non-existent-id');
+
+    // Act
+    httpController
+      .expectOne('https://pokeapi.co/api/v2/pokemon/non-existent-id')
+      .flush(null, { status: 404, statusText: 'Not Found' });
+
+    // Assert
+    expect(await promise).toBeNull();
   });
 });

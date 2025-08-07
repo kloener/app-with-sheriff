@@ -2,8 +2,17 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: '**',
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'discover-pokemons',
+  },
+  {
+    path: 'discover-pokemons',
     loadComponent: () =>
-      import('./bookings/page').then((m) => m.BookingsPageComponent),
+      import('./discover-pokémons/page').then((m) => m.DiscoverPokemonPage),
+  },
+  {
+    path: '**',
+    redirectTo: 'discover-pokemons',
   },
 ];

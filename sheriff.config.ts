@@ -36,11 +36,28 @@ export const config: SheriffConfig = {
 
     'type:domain': [sameTag, 'type:utils'],
     'type:application': [sameTag, 'type:domain', 'type:utils'],
-    'type:infrastructure': [sameTag, 'type:domain', 'type:application', 'type:utils'],
-    'type:presentation': [sameTag, 'type:domain', 'type:application', 'type:infrastructure', 'type:ui', 'type:utils'],
+    'type:infrastructure': [
+      sameTag,
+      'type:domain',
+      'type:application',
+      'type:utils',
+    ],
+    'type:presentation': [
+      sameTag,
+      'type:domain',
+      'type:application',
+      'type:ui',
+      'type:utils',
+    ],
+    'type:page': [
+      'type:presentation',
+      'type:domain',
+      'type:application',
+      'type:ui',
+      'type:utils',
+    ],
     'type:ui': [sameTag, 'type:domain'],
     'type:utils': [sameTag, 'type:domain'],
-    'type:page': ['type:presentation'],
 
     root: ['domain:*', 'type:page'],
   },
