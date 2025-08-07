@@ -1,8 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { ConfirmBookingUseCase, CreateBookingUseCase, GetUserBookingsUseCase } from './bookings/application';
+import {
+  ConfirmBookingUseCase,
+  CreateBookingUseCase,
+  GetUserBookingsUseCase,
+} from './bookings/application';
 import { InMemoryBookingRepository } from './bookings/infrastructure';
 import { GetAllPokémonUseCase } from './discover-pokémons/application';
 import { HttpPokémonRepository } from './discover-pokémons/infrastructure';
@@ -16,13 +24,30 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     [
       // Domain bookings
-      { provide: CreateBookingUseCase, useFactory: () => new CreateBookingUseCase(new InMemoryBookingRepository()) },
-      { provide: ConfirmBookingUseCase, useFactory: () => new ConfirmBookingUseCase(new InMemoryBookingRepository()) },
-      { provide: GetUserBookingsUseCase, useFactory: () => new GetUserBookingsUseCase(new InMemoryBookingRepository()) },
+      {
+        provide: CreateBookingUseCase,
+        useFactory: () =>
+          new CreateBookingUseCase(new InMemoryBookingRepository()),
+      },
+      {
+        provide: ConfirmBookingUseCase,
+        useFactory: () =>
+          new ConfirmBookingUseCase(new InMemoryBookingRepository()),
+      },
+      {
+        provide: GetUserBookingsUseCase,
+        useFactory: () =>
+          new GetUserBookingsUseCase(new InMemoryBookingRepository()),
+      },
     ],
     [
       // Domain Discover Pokémon
-      { provide: GetAllPokémonUseCase, useFactory: (httpPokémonRepository: HttpPokémonRepository) => new GetAllPokémonUseCase(httpPokémonRepository), deps: [HttpPokémonRepository] },
-    ]
-  ]
+      {
+        provide: GetAllPokémonUseCase,
+        useFactory: (httpPokémonRepository: HttpPokémonRepository) =>
+          new GetAllPokémonUseCase(httpPokémonRepository),
+        deps: [HttpPokémonRepository],
+      },
+    ],
+  ],
 };

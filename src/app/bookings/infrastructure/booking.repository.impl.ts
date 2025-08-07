@@ -12,7 +12,7 @@ export interface BookingResponse {
   userId: string;
   serviceType: string;
   startDate: string; // ISO date string
-  endDate: string;   // ISO date string
+  endDate: string; // ISO date string
   status: BookingStatus;
   totalAmount: number;
   createdAt?: string;
@@ -24,7 +24,7 @@ export interface BookingRequest {
   userId: string;
   serviceType: string;
   startDate: string; // ISO date string
-  endDate: string;   // ISO date string
+  endDate: string; // ISO date string
   status?: BookingStatus; // Optional for creation (defaults to pending)
   totalAmount?: number; // Optional for creation (calculated)
 }
@@ -53,15 +53,18 @@ export interface UpdateBookingRequest {
 
 export class InMemoryBookingRepository implements BookingRepository {
   private readonly bookings = new Map<string, Booking>([
-    ['1', new Booking(
-      { value: '1' },
-      { value: 'user1' },
-      'Cleaning',
-      new Date('2025-10-01T10:00:00Z'),
-      new Date('2025-10-01T11:00:00Z'),
-      BookingStatus.CONFIRMED,
-      100
-    )]
+    [
+      '1',
+      new Booking(
+        { value: '1' },
+        { value: 'user1' },
+        'Cleaning',
+        new Date('2025-10-01T10:00:00Z'),
+        new Date('2025-10-01T11:00:00Z'),
+        BookingStatus.CONFIRMED,
+        100,
+      ),
+    ],
   ]);
 
   async findById(id: BookingId): Promise<Booking | null> {
@@ -70,8 +73,9 @@ export class InMemoryBookingRepository implements BookingRepository {
   }
 
   async findByUserId(userId: UserId): Promise<Booking[]> {
-    return Array.from(this.bookings.values())
-      .filter(booking => booking.userId.value === userId.value);
+    return Array.from(this.bookings.values()).filter(
+      (booking) => booking.userId.value === userId.value,
+    );
   }
 
   async save(booking: Booking): Promise<void> {
@@ -83,10 +87,9 @@ export class InMemoryBookingRepository implements BookingRepository {
   }
 
   async findByDateRange(startDate: Date, endDate: Date): Promise<Booking[]> {
-    return Array.from(this.bookings.values())
-      .filter(booking =>
-        booking.startDate <= endDate && booking.endDate >= startDate
-      );
+    return Array.from(this.bookings.values()).filter(
+      (booking) => booking.startDate <= endDate && booking.endDate >= startDate,
+    );
   }
 
   // Additional methods for testing/development
@@ -112,12 +115,16 @@ export class InMemoryBookingRepository implements BookingRepository {
 export class HttpBookingRepository implements BookingRepository {
   constructor(
     private readonly apiUrl: string,
-    private readonly httpClient: HttpClient
+    private readonly httpClient: HttpClient,
   ) {}
 
   async findById(id: BookingId): Promise<Booking | null> {
     try {
-      const response = await firstValueFrom(this.httpClient.get<BookingResponse>(`${this.apiUrl}/bookings/${id.value}`));
+      const response = await firstValueFrom(
+        this.httpClient.get<BookingResponse>(
+          `${this.apiUrl}/bookings/${id.value}`,
+        ),
+      );
       return this.mapToBooking(response);
     } catch (error) {
       if (this.isNotFoundError(error)) {
@@ -128,8 +135,12 @@ export class HttpBookingRepository implements BookingRepository {
   }
 
   async findByUserId(userId: UserId): Promise<Booking[]> {
-    const response = await firstValueFrom(this.httpClient.get<BookingResponse[]>(`${this.apiUrl}/users/${userId.value}/bookings`));
-    return response.map(data => this.mapToBooking(data));
+    const response = await firstValueFrom(
+      this.httpClient.get<BookingResponse[]>(
+        `${this.apiUrl}/users/${userId.value}/bookings`,
+      ),
+    );
+    return response.map((data) => this.mapToBooking(data));
   }
 
   async save(booking: Booking): Promise<void> {
@@ -138,17 +149,21 @@ export class HttpBookingRepository implements BookingRepository {
   }
 
   async delete(id: BookingId): Promise<void> {
-    await firstValueFrom(this.httpClient.delete(`${this.apiUrl}/bookings/${id.value}`));
+    await firstValueFrom(
+      this.httpClient.delete(`${this.apiUrl}/bookings/${id.value}`),
+    );
   }
 
   async findByDateRange(startDate: Date, endDate: Date): Promise<Booking[]> {
-    const response = await firstValueFrom(this.httpClient.get<BookingResponse[]>(`${this.apiUrl}/bookings`, {
-      params: {
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString()
-      }
-    }));
-    return response.map(data => this.mapToBooking(data));
+    const response = await firstValueFrom(
+      this.httpClient.get<BookingResponse[]>(`${this.apiUrl}/bookings`, {
+        params: {
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+        },
+      }),
+    );
+    return response.map((data) => this.mapToBooking(data));
   }
 
   private mapToBooking(data: BookingResponse): Booking {
@@ -160,7 +175,7 @@ export class HttpBookingRepository implements BookingRepository {
       new Date(data.startDate),
       new Date(data.endDate),
       data.status,
-      data.totalAmount
+      data.totalAmount,
     );
   }
 
@@ -173,7 +188,7 @@ export class HttpBookingRepository implements BookingRepository {
       startDate: booking.startDate.toISOString(),
       endDate: booking.endDate.toISOString(),
       status: booking.status,
-      totalAmount: booking.totalAmount
+      totalAmount: booking.totalAmount,
     };
   }
 

@@ -1,5 +1,5 @@
 <ul>
-  @for(pokemon of (pokemonList | async); track pokemon.name) {
+  @for (pokemon of pokemonList | async; track pokemon.name) {
     <li>
       <app-pokemon-full-image [pokemon]="pokemon" />
     </li>

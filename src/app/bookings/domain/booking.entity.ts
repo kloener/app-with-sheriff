@@ -17,7 +17,7 @@ export enum BookingStatus {
   PENDING = 'pending',
   CONFIRMED = 'confirmed',
   CANCELLED = 'cancelled',
-  COMPLETED = 'completed'
+  COMPLETED = 'completed',
 }
 
 export class Booking {
@@ -28,7 +28,7 @@ export class Booking {
     private _startDate: Date,
     private _endDate: Date,
     private _status: BookingStatus = BookingStatus.PENDING,
-    private _totalAmount = 0
+    private _totalAmount = 0,
   ) {
     this.validateDates();
   }

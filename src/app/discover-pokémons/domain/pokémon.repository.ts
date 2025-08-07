@@ -1,4 +1,4 @@
-import { Pokémon } from "./pokémon.entity";
+import { Pokémon } from './pokémon.entity';
 
 export interface PokémonRepository {
   findAll(page: number, pageSize: number): Promise<Pokémon[]>;

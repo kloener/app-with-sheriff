@@ -4,7 +4,7 @@ import {
   ConfirmBookingUseCase,
   GetUserBookingsUseCase,
   CreateBookingCommand,
-  CreateBookingResult
+  CreateBookingResult,
 } from '../application';
 import { Booking } from '../domain';
 
@@ -16,14 +16,16 @@ import { Booking } from '../domain';
  */
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookingFacade {
   private readonly createBookingUseCase = inject(CreateBookingUseCase);
   private readonly confirmBookingUseCase = inject(ConfirmBookingUseCase);
   private readonly getUserBookingsUseCase = inject(GetUserBookingsUseCase);
 
-  async createBooking(command: CreateBookingCommand): Promise<CreateBookingResult> {
+  async createBooking(
+    command: CreateBookingCommand,
+  ): Promise<CreateBookingResult> {
     return this.createBookingUseCase.execute(command);
   }
 

@@ -18,7 +18,7 @@ import { PokémonItemDTO } from './PokémonItemDTO';
  */
 const dtoToPokémon = (dto: PokémonDetailDTO): Pokémon =>
   new Pokémon(
-    dto.id,
+    String(dto.id),
     dto.name,
     dto.order,
     dto.height,

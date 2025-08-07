@@ -29,51 +29,53 @@ import { BookingListComponent } from '../presentation';
       </footer>
     </div>
   `,
-  styles: [`
-    .bookings-page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+  styles: [
+    `
+      .bookings-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-    .page-header {
-      background: #f8f9fa;
-      padding: 30px 20px;
-      text-align: center;
-      border-bottom: 1px solid #dee2e6;
-    }
+      .page-header {
+        background: #f8f9fa;
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+      }
 
-    .page-header h1 {
-      margin: 0 0 10px 0;
-      color: #495057;
-    }
+      .page-header h1 {
+        margin: 0 0 10px 0;
+        color: #495057;
+      }
 
-    .page-header p {
-      margin: 0;
-      color: #6c757d;
-    }
+      .page-header p {
+        margin: 0;
+        color: #6c757d;
+      }
 
-    .page-content {
-      flex: 1;
-      padding: 20px;
-    }
+      .page-content {
+        flex: 1;
+        padding: 20px;
+      }
 
-    .page-footer {
-      background: #f8f9fa;
-      padding: 20px;
-      text-align: center;
-      border-top: 1px solid #dee2e6;
-    }
+      .page-footer {
+        background: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        border-top: 1px solid #dee2e6;
+      }
 
-    .page-footer a {
-      color: #007bff;
-      text-decoration: none;
-    }
+      .page-footer a {
+        color: #007bff;
+        text-decoration: none;
+      }
 
-    .page-footer a:hover {
-      text-decoration: underline;
-    }
-  `]
+      .page-footer a:hover {
+        text-decoration: underline;
+      }
+    `,
+  ],
 })
 export class BookingsPageComponent {
   // This component serves as a page container

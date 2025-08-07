@@ -1,6 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Booking } from '../domain';
 import { BookingFacade } from './booking.facade';
 
@@ -36,17 +47,31 @@ import { BookingFacade } from './booking.facade';
 
           <div class="form-group">
             <label for="startDate">Start Date:</label>
-            <input type="datetime-local" id="startDate" formControlName="startDate">
+            <input
+              type="datetime-local"
+              id="startDate"
+              formControlName="startDate"
+            />
           </div>
 
           <div class="form-group">
             <label for="endDate">End Date:</label>
-            <input type="datetime-local" id="endDate" formControlName="endDate">
+            <input
+              type="datetime-local"
+              id="endDate"
+              formControlName="endDate"
+            />
           </div>
 
           <div class="form-group">
             <label for="pricePerHour">Price per Hour:</label>
-            <input type="number" id="pricePerHour" formControlName="pricePerHour" min="0" step="0.01">
+            <input
+              type="number"
+              id="pricePerHour"
+              formControlName="pricePerHour"
+              min="0"
+              step="0.01"
+            />
           </div>
 
           <pre>{{ bookingForm.value | json }}</pre>
@@ -67,12 +92,13 @@ import { BookingFacade } from './booking.facade';
           No bookings found. Create your first booking above!
         </div>
 
-        <div *ngFor="let booking of bookings(); trackBy: trackByBookingId"
-             class="booking-card"
-             [class.confirmed]="booking.status === 'confirmed'"
-             [class.pending]="booking.status === 'pending'"
-             [class.cancelled]="booking.status === 'cancelled'">
-
+        <div
+          *ngFor="let booking of bookings(); trackBy: trackByBookingId"
+          class="booking-card"
+          [class.confirmed]="booking.status === 'confirmed'"
+          [class.pending]="booking.status === 'pending'"
+          [class.cancelled]="booking.status === 'cancelled'"
+        >
           <div class="booking-header">
             <h4>{{ booking.serviceType | titlecase }}</h4>
             <span class="status-badge" [class]="booking.status">
@@ -81,26 +107,34 @@ import { BookingFacade } from './booking.facade';
           </div>
 
           <div class="booking-details">
-            <p><strong>Start:</strong> {{ booking.startDate | date:'medium' }}</p>
-            <p><strong>End:</strong> {{ booking.endDate | date:'medium' }}</p>
+            <p>
+              <strong>Start:</strong> {{ booking.startDate | date: 'medium' }}
+            </p>
+            <p><strong>End:</strong> {{ booking.endDate | date: 'medium' }}</p>
             <p><strong>Duration:</strong> {{ calculateDuration(booking) }}</p>
             <p><strong>Amount:</strong> {{ booking.totalAmount | currency }}</p>
           </div>
 
           <div class="booking-actions">
-            <button *ngIf="booking.status === 'pending'"
-                    (click)="onConfirmBooking(booking.id.value)"
-                    class="btn-confirm">
+            <button
+              *ngIf="booking.status === 'pending'"
+              (click)="onConfirmBooking(booking.id.value)"
+              class="btn-confirm"
+            >
               Confirm
             </button>
-            <button *ngIf="canCancel(booking)"
-                    (click)="onCancelBooking(booking.id.value)"
-                    class="btn-cancel">
+            <button
+              *ngIf="canCancel(booking)"
+              (click)="onCancelBooking(booking.id.value)"
+              class="btn-cancel"
+            >
               Cancel
             </button>
-            <button *ngIf="canComplete(booking)"
-                    (click)="onCompleteBooking(booking.id.value)"
-                    class="btn-complete">
+            <button
+              *ngIf="canComplete(booking)"
+              (click)="onCompleteBooking(booking.id.value)"
+              class="btn-complete"
+            >
               Mark Complete
             </button>
           </div>
@@ -108,123 +142,126 @@ import { BookingFacade } from './booking.facade';
       </div>
     </div>
   `,
-  styles: [`
-    .booking-list {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+  styles: [
+    `
+      .booking-list {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
 
-    .create-booking-form {
-      background: #f5f5f5;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 30px;
-    }
+      .create-booking-form {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+      .form-group {
+        margin-bottom: 15px;
+      }
 
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
 
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
 
-    .booking-card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 15px;
-      background: white;
-    }
+      .booking-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+        background: white;
+      }
 
-    .booking-card.confirmed {
-      border-left: 4px solid #28a745;
-    }
+      .booking-card.confirmed {
+        border-left: 4px solid #28a745;
+      }
 
-    .booking-card.pending {
-      border-left: 4px solid #ffc107;
-    }
+      .booking-card.pending {
+        border-left: 4px solid #ffc107;
+      }
 
-    .booking-card.cancelled {
-      border-left: 4px solid #dc3545;
-    }
+      .booking-card.cancelled {
+        border-left: 4px solid #dc3545;
+      }
 
-    .booking-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
+      .booking-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
 
-    .status-badge {
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+      .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
 
-    .status-badge.confirmed {
-      background: #d4edda;
-      color: #155724;
-    }
+      .status-badge.confirmed {
+        background: #d4edda;
+        color: #155724;
+      }
 
-    .status-badge.pending {
-      background: #fff3cd;
-      color: #856404;
-    }
+      .status-badge.pending {
+        background: #fff3cd;
+        color: #856404;
+      }
 
-    .status-badge.cancelled {
-      background: #f8d7da;
-      color: #721c24;
-    }
+      .status-badge.cancelled {
+        background: #f8d7da;
+        color: #721c24;
+      }
 
-    .booking-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
+      .booking-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
 
-    .booking-actions button {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+      .booking-actions button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
 
-    .btn-confirm {
-      background: #28a745;
-      color: white;
-    }
+      .btn-confirm {
+        background: #28a745;
+        color: white;
+      }
 
-    .btn-cancel {
-      background: #dc3545;
-      color: white;
-    }
+      .btn-cancel {
+        background: #dc3545;
+        color: white;
+      }
 
-    .btn-complete {
-      background: #007bff;
-      color: white;
-    }
+      .btn-complete {
+        background: #007bff;
+        color: white;
+      }
 
-    .loading, .no-bookings {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-    }
-  `]
+      .loading,
+      .no-bookings {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+      }
+    `,
+  ],
 })
 export class BookingListComponent implements OnInit {
   private readonly bookingFacade = inject(BookingFacade);
@@ -237,7 +274,7 @@ export class BookingListComponent implements OnInit {
     serviceType: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],
-    pricePerHour: [50, [Validators.required, Validators.min(0)]]
+    pricePerHour: [50, [Validators.required, Validators.min(0)]],
   });
 
   ngOnInit(): void {
@@ -267,7 +304,7 @@ export class BookingListComponent implements OnInit {
         serviceType: formValue.serviceType,
         startDate: new Date(formValue.startDate),
         endDate: new Date(formValue.endDate),
-        pricePerHour: formValue.pricePerHour
+        pricePerHour: formValue.pricePerHour,
       });
 
       if (result.success) {

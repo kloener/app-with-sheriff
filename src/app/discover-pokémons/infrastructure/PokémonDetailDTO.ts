@@ -2,7 +2,7 @@
  * Partial Response DTO from the Pokémon API
  */
 export interface PokémonDetailDTO {
-  id: string;
+  id: number;
   name: string;
   order: number;
   height: number;

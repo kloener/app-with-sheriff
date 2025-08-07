@@ -23,16 +23,14 @@ export interface CreateBookingResult {
 }
 
 export class CreateBookingUseCase {
-  constructor(
-    private readonly bookingRepository: BookingRepository
-  ) {}
+  constructor(private readonly bookingRepository: BookingRepository) {}
 
   async execute(command: CreateBookingCommand): Promise<CreateBookingResult> {
     try {
       // Validate business rules
       const existingBookings = await this.bookingRepository.findByDateRange(
         command.startDate,
-        command.endDate
+        command.endDate,
       );
 
       // Create new booking entity
@@ -44,15 +42,17 @@ export class CreateBookingUseCase {
         userId,
         command.serviceType,
         command.startDate,
-        command.endDate
+        command.endDate,
       );
 
       // Check for conflicts using domain service
-      if (BookingDomainService.checkForConflicts(newBooking, existingBookings)) {
+      if (
+        BookingDomainService.checkForConflicts(newBooking, existingBookings)
+      ) {
         return {
           bookingId: '',
           success: false,
-          message: 'Booking conflicts with existing reservation'
+          message: 'Booking conflicts with existing reservation',
         };
       }
 
@@ -65,14 +65,14 @@ export class CreateBookingUseCase {
       return {
         bookingId: bookingId.value,
         success: true,
-        message: 'Booking created successfully'
+        message: 'Booking created successfully',
       };
-
     } catch (error) {
       return {
         bookingId: '',
         success: false,
-        message: error instanceof Error ? error.message : 'Unknown error occurred'
+        message:
+          error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
   }
@@ -91,9 +91,7 @@ export interface ConfirmBookingCommand {
 }
 
 export class ConfirmBookingUseCase {
-  constructor(
-    private readonly bookingRepository: BookingRepository
-  ) {}
+  constructor(private readonly bookingRepository: BookingRepository) {}
 
   async execute(command: ConfirmBookingCommand): Promise<boolean> {
     const bookingId: BookingId = { value: command.bookingId };
@@ -119,9 +117,7 @@ export interface GetUserBookingsQuery {
 }
 
 export class GetUserBookingsUseCase {
-  constructor(
-    private readonly bookingRepository: BookingRepository
-  ) {}
+  constructor(private readonly bookingRepository: BookingRepository) {}
 
   async execute(query: GetUserBookingsQuery): Promise<Booking[]> {
     const userId: UserId = { value: query.userId };

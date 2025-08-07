@@ -23,24 +23,27 @@ export interface BookingRepository {
  */
 
 export class BookingDomainService {
-
-  static checkForConflicts(newBooking: Booking, existingBookings: Booking[]): boolean {
-    return existingBookings.some(existing =>
-      this.hasDateOverlap(newBooking, existing) &&
-      existing.serviceType === newBooking.serviceType
+  static checkForConflicts(
+    newBooking: Booking,
+    existingBookings: Booking[],
+  ): boolean {
+    return existingBookings.some(
+      (existing) =>
+        this.hasDateOverlap(newBooking, existing) &&
+        existing.serviceType === newBooking.serviceType,
     );
   }
 
   static calculateTotalRevenue(bookings: Booking[]): number {
     return bookings
-      .filter(booking => booking.status === BookingStatus.COMPLETED)
+      .filter((booking) => booking.status === BookingStatus.COMPLETED)
       .reduce((total, booking) => total + booking.totalAmount, 0);
   }
 
   static findAvailableSlots(
     requestedDate: Date,
     duration: number,
-    existingBookings: Booking[]
+    existingBookings: Booking[],
   ): Date[] {
     const availableSlots: Date[] = [];
     const dayStart = new Date(requestedDate);
@@ -54,18 +57,20 @@ export class BookingDomainService {
     while (currentSlot.getTime() + duration <= dayEnd.getTime()) {
       const slotEnd = new Date(currentSlot.getTime() + duration);
 
-      const hasConflict = existingBookings.some(booking =>
+      const hasConflict = existingBookings.some((booking) =>
         this.timeRangesOverlap(
-          currentSlot, slotEnd,
-          booking.startDate, booking.endDate
-        )
+          currentSlot,
+          slotEnd,
+          booking.startDate,
+          booking.endDate,
+        ),
       );
 
       if (!hasConflict) {
         availableSlots.push(new Date(currentSlot));
       }
 
-      currentSlot = new Date(currentSlot.getTime() + (30 * 60 * 1000)); // 30-minute intervals
+      currentSlot = new Date(currentSlot.getTime() + 30 * 60 * 1000); // 30-minute intervals
     }
 
     return availableSlots;
@@ -73,14 +78,18 @@ export class BookingDomainService {
 
   private static hasDateOverlap(booking1: Booking, booking2: Booking): boolean {
     return this.timeRangesOverlap(
-      booking1.startDate, booking1.endDate,
-      booking2.startDate, booking2.endDate
+      booking1.startDate,
+      booking1.endDate,
+      booking2.startDate,
+      booking2.endDate,
     );
   }
 
   private static timeRangesOverlap(
-    start1: Date, end1: Date,
-    start2: Date, end2: Date
+    start1: Date,
+    end1: Date,
+    start2: Date,
+    end2: Date,
   ): boolean {
     return start1 < end2 && start2 < end1;
   }

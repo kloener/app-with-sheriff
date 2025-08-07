@@ -1,4 +1,4 @@
-import { CacheAsyncByParams } from "./cache-async-by-params.annotation";
+import { CacheAsyncByParams } from './cache-async-by-params.annotation';
 
 describe('CacheAsyncByParams', () => {
   it('should cache async results by method name and params', async () => {
@@ -6,7 +6,9 @@ describe('CacheAsyncByParams', () => {
 
     class TestClass {
       @CacheAsyncByParams()
-      async mockMethod(_param: string) { return counter++; };
+      async mockMethod(_param: string) {
+        return counter++;
+      }
     }
 
     const ref = new TestClass();

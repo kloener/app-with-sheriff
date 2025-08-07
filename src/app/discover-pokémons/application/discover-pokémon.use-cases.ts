@@ -1,4 +1,4 @@
-import { Pokémon, PokémonRepository } from "../domain";
+import { Pokémon, PokémonRepository } from '../domain';
 
 export interface GetAllPokémonQuery {
   readonly page: number;
@@ -6,9 +6,7 @@ export interface GetAllPokémonQuery {
 }
 
 export class GetAllPokémonUseCase {
-  constructor(
-    private readonly pokémonRepository: PokémonRepository
-  ) {}
+  constructor(private readonly pokémonRepository: PokémonRepository) {}
 
   async execute(query: GetAllPokémonQuery): Promise<Pokémon[]> {
     return this.pokémonRepository.findAll(query.page, query.pageSize);
