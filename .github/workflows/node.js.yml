@@ -60,9 +60,6 @@ jobs:
           ${{ runner.os }}-
           npm-
 
-    - if: ${{ steps.cache-modules.outputs.cache-hit != 'true' }}
-      run: exit 1
-
     - run: npm run ${{ matrix.commands }}
       env:
         CI: true
