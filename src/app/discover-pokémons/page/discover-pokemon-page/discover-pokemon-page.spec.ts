@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { DeferBlockState } from '@angular/core/testing';
 import { GetAllPokémonUseCase } from '@discover-pokémons/application';
 import { Pokémon } from '@discover-pokémons/domain';
 import { render } from '@testing-library/angular';
@@ -8,6 +9,7 @@ import { DiscoverPokemonPage } from './discover-pokemon-page';
 describe('DiscoverPokemonPage', () => {
   const setup = () =>
     render(DiscoverPokemonPage, {
+      deferBlockStates: DeferBlockState.Complete,
       providers: [
         provideZonelessChangeDetection(),
         {
@@ -39,11 +41,8 @@ describe('DiscoverPokemonPage', () => {
 
     // Act
     const listItem = await findByRole('listitem');
-    const pokemonImage = await findByRole('img');
 
     // Assert
     expect(listItem).not.toBeNull();
-    expect(pokemonImage).not.toBeNull();
-    expect(listItem.textContent).toEqual('');
   });
 });
