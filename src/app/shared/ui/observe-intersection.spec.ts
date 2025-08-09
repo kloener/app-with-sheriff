@@ -3,8 +3,7 @@ import {
   input,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { ObserveIntersection } from '@shared/ui/observe-intersection';
-import { WINDOW_TOKEN } from '@shared/ui/window-token';
+import { ObserveIntersection, WINDOW_TOKEN } from '@shared/ui';
 import { assertNotNull } from '@shared/utils';
 import { render, screen } from '@testing-library/angular';
 
