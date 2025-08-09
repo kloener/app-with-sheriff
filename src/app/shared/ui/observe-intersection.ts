@@ -1,6 +1,5 @@
 import {
   Directive,
-  DOCUMENT,
   ElementRef,
   inject,
   input,
@@ -8,6 +7,7 @@ import {
   OnInit,
   output,
 } from '@angular/core';
+import { WINDOW_TOKEN } from '@shared/ui/window-token';
 
 /**
  * Emits a boolean whether the element is in view or not.
@@ -17,24 +17,28 @@ import {
   selector: '[appObserveIntersection]',
 })
 export class ObserveIntersection implements OnInit, OnDestroy {
-  private readonly document: Document = inject(DOCUMENT);
+  private readonly global: Window = inject(WINDOW_TOKEN);
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
-  private readonly global: Window = this.document.defaultView || window;
-  private readonly supportsIntersectionObserver: boolean =
-    'IntersectionObserver' in this.global;
   private observer: IntersectionObserver | null = null;
 
   public readonly once = input<boolean>(false);
   public readonly appObserveIntersection = output<boolean>();
 
   ngOnInit(): void {
-    if (!this.supportsIntersectionObserver) {
+    if (
+      !('IntersectionObserver' in this.global) ||
+      typeof this.global['IntersectionObserver'] !== 'function'
+    ) {
       return;
     }
 
-    this.observer ??= new IntersectionObserver((entries) =>
-      entries.forEach((entry) => this.updateIntersectionForEntry(entry)),
-    );
+    const clazzIntersectionObserver = this.global.IntersectionObserver as new (
+      callback: (entries: IntersectionObserverEntry[]) => void,
+    ) => IntersectionObserver;
+
+    this.observer ??= new clazzIntersectionObserver((entries) => {
+      entries.forEach((entry) => this.updateIntersectionForEntry(entry));
+    });
 
     this.observer.observe(this.elementRef.nativeElement);
   }

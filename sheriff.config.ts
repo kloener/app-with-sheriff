@@ -84,7 +84,7 @@ export const config: SheriffConfig = {
     /**
      * UI Layer containing reusable UI components (aka dumb components).
      */
-    'type:ui': [sameTag, 'type:domain'],
+    'type:ui': [sameTag, 'type:utils', 'type:domain'],
     /**
      * Utils Layer containing utility functions and shared logic.
      */
