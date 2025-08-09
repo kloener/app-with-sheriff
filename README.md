@@ -1,5 +1,7 @@
 # AppWithSheriff
 
+[![App with Sheriff CI/CD](https://github.com/kloener/app-with-sheriff/actions/workflows/node.js.yml/badge.svg)](https://github.com/kloener/app-with-sheriff/actions/workflows/node.js.yml)
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0-next.2.
 
 It demonstrates how to integrate Sheriff and Clean Architecture principles in an Angular application. The scenario for this application include a list and detail view for Pokémon.
