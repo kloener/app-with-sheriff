@@ -2,7 +2,7 @@ import { AsyncPipe, UpperCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { GetAllPokémonUseCase } from '@discover-pokémons/application';
 import { PokemonFullImage } from '@discover-pokémons/ui';
-import { ObserveIntersection } from '@shared/ui/observe-intersection';
+import { ObserveIntersection } from '@shared/ui';
 
 @Component({
   selector: 'app-pokemon-list',

@@ -4,6 +4,14 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictBuiltinIteratorReturn": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -17,7 +25,7 @@
     "paths": {
       "@discover-pokémons/*": ["./src/app/discover-pokémons/*"],
       "@shared/*": ["./src/app/shared/*"],
-      "@app/*": ["./src/app/*"],
+      "@app/*": ["./src/app/*"]
     }
   },
   "angularCompilerOptions": {
