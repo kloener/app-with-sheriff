@@ -26,6 +26,11 @@ export const config: SheriffConfig = {
      *   - ./page (domain:bookings, type:page)
      *   - ./public_api (domain:bookings, type:public_api)
      */
+    'src/app/<domain>/application/commands': [
+      'domain:<domain>',
+      'type:application',
+    ],
+    'src/app/<domain>/domain/events': ['domain:<domain>', 'type:domain'],
     'src/app/<domain>/<type>': ['domain:<domain>', 'type:<type>'],
   },
   depRules: {
@@ -68,6 +73,7 @@ export const config: SheriffConfig = {
       sameTag,
       'type:domain',
       'type:application',
+      'type:public_api', // FIXME currently only needed for integration-tests.
       'type:ui',
       'type:utils',
     ],
@@ -78,6 +84,7 @@ export const config: SheriffConfig = {
       'type:presentation',
       'type:domain',
       'type:application',
+      'type:public_api', // FIXME currently only needed for integration-tests.
       'type:ui',
       'type:utils',
     ],

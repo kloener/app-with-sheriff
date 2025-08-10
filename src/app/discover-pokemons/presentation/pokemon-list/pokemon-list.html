@@ -1,10 +1,10 @@
-@let list = pokemonList | async;
+@let list = pokemonList();
 @if (list) {
   @if (list.length === 0) {
     <p>Keine Pokemons gefunden.</p>
   } @else {
     <ul>
-      @for (pokemon of pokemonList | async; track pokemon.name) {
+      @for (pokemon of list; track pokemon.name) {
         <li>
           @defer (on viewport) {
             <app-pokemon-full-image [pokemon]="pokemon" />
@@ -18,7 +18,7 @@
     </ul>
     <hr
       style="visibility: hidden"
-      (appObserveIntersection)="loadMorePokemon($event)"
+      (appObserveIntersection)="$event ? loadMorePokemon() : null"
     />
   }
 } @else {

@@ -1,7 +1,14 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import {
+  inject,
+  provideEnvironmentInitializer,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { DeferBlockState } from '@angular/core/testing';
-import { GetAllPokemonUseCase } from '@discover-pokemons/application';
+import { GetPokemonsUseCase } from '@discover-pokemons/application';
+import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
 import { Pokemon } from '@discover-pokemons/domain';
+import { CommandBus } from '@shared/application';
+import { provideEventBus } from '@shared/public_api';
 import { render, RenderResult } from '@testing-library/angular';
 import { PokemonList } from './pokemon-list';
 
@@ -11,9 +18,19 @@ describe('PokemonList', () => {
       // deferBlockStates: DeferBlockState.Complete,
       providers: [
         provideZonelessChangeDetection(),
+        provideEventBus(),
+        provideEnvironmentInitializer(() => {
+          const commandBus = inject(CommandBus);
+          const getPokemonsUseCase = inject(GetPokemonsUseCase);
+
+          commandBus.register(LoadMorePokemonsCommand.name, getPokemonsUseCase);
+        }),
         {
-          provide: GetAllPokemonUseCase,
-          useValue: { execute: () => Promise.resolve([...pokemonList]) },
+          provide: GetPokemonsUseCase,
+          useValue: {
+            execute: () => Promise.resolve([...pokemonList]),
+            handle: () => Promise.resolve([...pokemonList]),
+          },
         },
       ],
     });
@@ -52,5 +69,22 @@ describe('PokemonList', () => {
     await result.fixture.whenStable();
 
     expect(result.queryByRole('list')).toBeTruthy();
+  });
+
+  it('should load more Pokemons when intersecting', async () => {
+    const result = await setup([
+      new Pokemon(
+        '1',
+        'Bulbasaur',
+        1,
+        45,
+        49,
+        'https://pokemon.api/1.png',
+        'https://pokemon.api/back/1.png',
+        'https://pokemon.api/shiny/1.png',
+      ),
+    ]);
+
+    result.fixture.componentInstance.loadMorePokemon();
   });
 });

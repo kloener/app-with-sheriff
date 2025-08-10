@@ -1,9 +1,18 @@
 import { Pokemon, PokemonRepository } from '@discover-pokemons/domain';
-import { GetAllPokemonUseCase } from './discover-pokemon.use-cases';
+import { GetPokemonsUseCase } from './discover-pokemon.use-cases';
 
-describe('GetAllPokemonUseCase', () => {
-  let useCase: GetAllPokemonUseCase;
-  const mockPokemon = new Pokemon('1', 'Bulbasaur', 1, 45, 49, '', '', '');
+describe('GetPokemonsUseCase', () => {
+  let useCase: GetPokemonsUseCase;
+  const mockPokemon = new Pokemon(
+    '1',
+    'Bulbasaur',
+    1,
+    45,
+    49,
+    'example.jpg',
+    'example.jpg',
+    'example.jpg',
+  );
   const mockRepository: PokemonRepository = {
     findAll(_page: number, _pageSize: number): Promise<Pokemon[]> {
       return Promise.resolve([mockPokemon]);
@@ -14,7 +23,7 @@ describe('GetAllPokemonUseCase', () => {
   };
 
   beforeEach(() => {
-    useCase = new GetAllPokemonUseCase(mockRepository);
+    useCase = new GetPokemonsUseCase(mockRepository);
   });
 
   it('should rertieve all Pokemon using repository', async () => {

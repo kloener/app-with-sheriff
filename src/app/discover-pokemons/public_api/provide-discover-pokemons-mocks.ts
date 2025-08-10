@@ -1,12 +1,12 @@
 import { Provider } from '@angular/core';
-import { GetAllPokemonUseCase } from '@discover-pokemons/application';
+import { GetPokemonsUseCase } from '@discover-pokemons/application';
 import { Pokemon } from '@discover-pokemons/domain';
 
 export const provideDiscoverPokemonsMocks = (): Provider[] => [
   {
-    provide: GetAllPokemonUseCase,
+    provide: GetPokemonsUseCase,
     useFactory: () =>
-      new GetAllPokemonUseCase({
+      new GetPokemonsUseCase({
         findAll: () =>
           Promise.resolve([
             new Pokemon(

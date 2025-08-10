@@ -1,7 +1,8 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { DeferBlockState } from '@angular/core/testing';
-import { GetAllPokemonUseCase } from '@discover-pokemons/application';
+import { GetPokemonsUseCase } from '@discover-pokemons/application';
 import { Pokemon } from '@discover-pokemons/domain';
+import { provideEventBus } from '@shared/public_api';
 import { render } from '@testing-library/angular';
 
 import { DiscoverPokemonPage } from './discover-pokemon-page';
@@ -12,10 +13,11 @@ describe('DiscoverPokemonPage', () => {
       deferBlockStates: DeferBlockState.Complete,
       providers: [
         provideZonelessChangeDetection(),
+        provideEventBus(),
         {
-          provide: GetAllPokemonUseCase,
+          provide: GetPokemonsUseCase,
           useFactory: () =>
-            new GetAllPokemonUseCase({
+            new GetPokemonsUseCase({
               findAll: () =>
                 Promise.resolve([
                   new Pokemon(

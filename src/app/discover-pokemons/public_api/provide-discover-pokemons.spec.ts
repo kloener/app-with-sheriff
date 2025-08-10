@@ -5,7 +5,8 @@ import {
 } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { GetAllPokemonUseCase } from '../application';
+import { provideEventBus } from '@shared/public_api';
+import { GetPokemonsUseCase } from '../application';
 import { provideDiscoverPokemons } from './provide-discover-pokemons';
 
 describe('provideDiscoverPokemons', () => {
@@ -15,15 +16,16 @@ describe('provideDiscoverPokemons', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(),
         provideHttpClientTesting(),
+        provideEventBus(),
         provideDiscoverPokemons(),
       ],
     });
 
     const httpController = TestBed.inject(HttpTestingController);
-    const getAllPokemonUseCase = TestBed.inject(GetAllPokemonUseCase);
+    const getAllPokemonUseCase = TestBed.inject(GetPokemonsUseCase);
 
     expect(getAllPokemonUseCase).toBeDefined();
-    expect(getAllPokemonUseCase).toBeInstanceOf(GetAllPokemonUseCase);
+    expect(getAllPokemonUseCase).toBeInstanceOf(GetPokemonsUseCase);
 
     // Act
     const promise = getAllPokemonUseCase.execute({ page: 1, pageSize: 20 });
