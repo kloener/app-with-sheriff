@@ -21,7 +21,6 @@ jobs:
         with:
           path: |
             node_modules
-            src/app
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -54,7 +53,6 @@ jobs:
       with:
         path: |
           node_modules
-          src/app
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json', 'src/assets/openapi-*.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
