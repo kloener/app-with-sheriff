@@ -9,7 +9,7 @@ export const routes: Routes = [
   {
     path: 'discover-pokemons',
     loadChildren: () =>
-      import('./discover-pokémons/public_api').then((m) => m.routes),
+      import('./discover-pokemons/public_api').then((m) => m.routes),
   },
   {
     path: '**',

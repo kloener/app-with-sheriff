@@ -23,7 +23,7 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@discover-pokémons/*": ["./src/app/discover-pokémons/*"],
+      "@discover-pokemons/*": ["./src/app/discover-pokemons/*"],
       "@shared/*": ["./src/app/shared/*"],
       "@app/*": ["./src/app/*"]
     }

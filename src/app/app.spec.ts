@@ -20,6 +20,6 @@ describe('App', () => {
   it('should render title', async () => {
     const { findByText } = await setup();
 
-    expect(await findByText('Discover Pokémons')).toBeTruthy();
+    expect(await findByText('Discover Pokemons')).toBeTruthy();
   });
 });

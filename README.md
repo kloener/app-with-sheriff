@@ -4,7 +4,7 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0-next.2.
 
-It demonstrates how to integrate Sheriff and Clean Architecture principles in an Angular application. The scenario for this application include a list and detail view for Pokémon.
+It demonstrates how to integrate Sheriff and Clean Architecture principles in an Angular application. The scenario for this application include a list and detail view for Pokemon.
 
 Clean Architecture is a software design pattern that emphasizes separation of concerns, making the application more maintainable and testable. Sheriff is a library that helps enforce these principles by providing tools for managing dependencies and enforcing architectural rules.
 

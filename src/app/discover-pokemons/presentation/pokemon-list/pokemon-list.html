@@ -1,0 +1,26 @@
+@let list = pokemonList | async;
+@if (list) {
+  @if (list.length === 0) {
+    <p>Keine Pokemons gefunden.</p>
+  } @else {
+    <ul>
+      @for (pokemon of pokemonList | async; track pokemon.name) {
+        <li>
+          @defer (on viewport) {
+            <app-pokemon-full-image [pokemon]="pokemon" />
+          } @placeholder (minimum 300ms) {
+            <div class="pokemon-placeholder">
+              <p>{{ pokemon.name | uppercase }}</p>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+    <hr
+      style="visibility: hidden"
+      (appObserveIntersection)="loadMorePokemon($event)"
+    />
+  }
+} @else {
+  <p>Lade Pokemons ...</p>
+}
