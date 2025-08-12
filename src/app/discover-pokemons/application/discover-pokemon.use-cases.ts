@@ -1,5 +1,6 @@
 import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
-import { ICommandHandler } from '@shared/domain';
+import { PokemonsUpdated } from '@discover-pokemons/domain/events/pokemons-updated';
+import { ICommandHandler, IEventBus } from '@shared/domain';
 import { BehaviorSubject, map, Observable, OperatorFunction } from 'rxjs';
 import { Pokemon, PokemonRepository } from '../domain';
 
@@ -29,7 +30,10 @@ export class GetPokemonsUseCase
     .asObservable()
     .pipe(mapMapToArray());
 
-  constructor(private readonly pokemonRepository: PokemonRepository) {}
+  constructor(
+    private readonly pokemonRepository: PokemonRepository,
+    private readonly eventBus: IEventBus,
+  ) {}
 
   handle(_command: LoadMorePokemonsCommand) {
     this.page += 1;
@@ -45,7 +49,10 @@ export class GetPokemonsUseCase
     );
 
     this.updatePokemonList(result);
-    return mapToArray<Pokemon>()(this.pokemonList$$.getValue());
+    const updatedList = mapToArray<Pokemon>()(this.pokemonList$$.getValue());
+    this.eventBus.publish(PokemonsUpdated.create(updatedList));
+
+    return updatedList;
   }
 
   private updatePokemonList(result: Pokemon[]) {

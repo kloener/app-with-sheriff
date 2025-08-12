@@ -7,7 +7,8 @@ import {
 import { GetPokemonsUseCase } from '@discover-pokemons/application';
 import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
 import { HttpPokemonRepository } from '@discover-pokemons/infrastructure';
-import { CommandBus } from '@shared/application';
+import { CommandBus, EventBus } from '@shared/application';
+import type { IEventBus } from '@shared/domain';
 
 export const provideDiscoverPokemons = (): (
   | Provider
@@ -15,9 +16,11 @@ export const provideDiscoverPokemons = (): (
 )[] => [
   {
     provide: GetPokemonsUseCase,
-    useFactory: (httpPokemonRepository: HttpPokemonRepository) =>
-      new GetPokemonsUseCase(httpPokemonRepository),
-    deps: [HttpPokemonRepository],
+    useFactory: (
+      httpPokemonRepository: HttpPokemonRepository,
+      eventBus: IEventBus,
+    ) => new GetPokemonsUseCase(httpPokemonRepository, eventBus),
+    deps: [HttpPokemonRepository, EventBus],
   },
   provideEnvironmentInitializer(() => {
     const commandBus = inject(CommandBus);

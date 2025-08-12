@@ -4,7 +4,7 @@
     <p>Keine Pokemons gefunden.</p>
   } @else {
     <ul>
-      @for (pokemon of list; track pokemon.name) {
+      @for (pokemon of list; track pokemon.id) {
         <li>
           @defer (on viewport) {
             <app-pokemon-full-image [pokemon]="pokemon" />
