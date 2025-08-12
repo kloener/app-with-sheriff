@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { LogMethod } from '@shared/application';
 import { CacheAsyncByParams } from '@shared/utils';
 import { bufferCount, firstValueFrom, map, merge, of, switchMap } from 'rxjs';
 import { Pokemon, PokemonRepository } from '../domain';
@@ -42,11 +43,18 @@ export class HttpPokemonRepository implements PokemonRepository {
     );
   }
 
+  @LogMethod('debug')
   @CacheAsyncByParams()
   async findById(idOrName: string): Promise<Pokemon | null> {
     const requestUri = `${this.apiUrl}/${idOrName}`;
     return firstValueFrom(
       this.http.get<PokemonDetailDTO>(requestUri).pipe(mapDtoToPokemon()),
-    ).catch(() => null);
+    ).catch((err) => {
+      console.warn(
+        `Pokemon with id or name "${idOrName}" failed to load.`,
+        err,
+      );
+      return null;
+    });
   }
 }

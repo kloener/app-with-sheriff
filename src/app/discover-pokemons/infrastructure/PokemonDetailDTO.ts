@@ -12,7 +12,7 @@ export interface PokemonDetailDTO {
     back_default: string;
     [key: string]: object | string | null;
     other: {
-      showdown: {
+      'official-artwork': {
         front_default: string;
         [key: string]: string | null;
       };
