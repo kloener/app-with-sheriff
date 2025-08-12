@@ -4,7 +4,10 @@ import {
   provideEnvironmentInitializer,
   Provider,
 } from '@angular/core';
-import { GetPokemonsUseCase } from '@discover-pokemons/application';
+import {
+  GetPokemonDetailsUseCase,
+  GetPokemonsUseCase,
+} from '@discover-pokemons/application';
 import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
 import { HttpPokemonRepository } from '@discover-pokemons/infrastructure';
 import { CommandBus, EventBus } from '@shared/application';
@@ -20,6 +23,14 @@ export const provideDiscoverPokemons = (): (
       httpPokemonRepository: HttpPokemonRepository,
       eventBus: IEventBus,
     ) => new GetPokemonsUseCase(httpPokemonRepository, eventBus),
+    deps: [HttpPokemonRepository, EventBus],
+  },
+  {
+    provide: GetPokemonDetailsUseCase,
+    useFactory: (
+      httpPokemonRepository: HttpPokemonRepository,
+      eventBus: IEventBus,
+    ) => new GetPokemonDetailsUseCase(httpPokemonRepository, eventBus),
     deps: [HttpPokemonRepository, EventBus],
   },
   provideEnvironmentInitializer(() => {

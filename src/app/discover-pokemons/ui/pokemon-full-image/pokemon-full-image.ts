@@ -11,4 +11,5 @@ import { Pokemon } from '@discover-pokemons/domain';
 })
 export class PokemonFullImage {
   pokemon = input.required<Pokemon>();
+  size = input<string>('256');
 }

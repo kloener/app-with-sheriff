@@ -11,8 +11,4 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./discover-pokemons/public_api').then((m) => m.routes),
   },
-  {
-    path: '**',
-    redirectTo: 'discover-pokemons',
-  },
 ];

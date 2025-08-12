@@ -1,12 +1,23 @@
 import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
+import { PokemonLoaded } from '@discover-pokemons/domain/events/pokemon-loaded';
 import { PokemonsUpdated } from '@discover-pokemons/domain/events/pokemons-updated';
 import { ICommandHandler, IEventBus } from '@shared/domain';
 import { BehaviorSubject, map, Observable, OperatorFunction } from 'rxjs';
 import { Pokemon, PokemonRepository } from '../domain';
 
+class PokemonNotFoundError extends Error {
+  constructor(idOrName: string) {
+    super(`Pokemon with id or name "${idOrName}" does not exist.`);
+  }
+}
+
 export interface GetPokemonsQuery {
   readonly page: number;
   readonly pageSize: number;
+}
+
+export interface GetPokemonQuery {
+  readonly idOrName: string;
 }
 
 function mapToArray<T>(): (list: Map<string, T>) => T[] {
@@ -61,5 +72,21 @@ export class GetPokemonsUseCase
       currentMap.set(pokemon.id, pokemon);
     }
     this.pokemonList$$.next(new Map<string, Pokemon>([...currentMap]));
+  }
+}
+
+export class GetPokemonDetailsUseCase {
+  constructor(
+    private readonly pokemonRepository: PokemonRepository,
+    private readonly eventBus: IEventBus,
+  ) {}
+
+  async execute(query: GetPokemonQuery): Promise<Pokemon> {
+    const result = await this.pokemonRepository.findById(query.idOrName);
+    if (result) {
+      this.eventBus.publish(PokemonLoaded.create(result));
+      return result;
+    }
+    throw new PokemonNotFoundError(query.idOrName);
   }
 }

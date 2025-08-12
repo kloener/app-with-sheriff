@@ -6,13 +6,17 @@
     <ul>
       @for (pokemon of list; track pokemon.id) {
         <li>
-          @defer (on viewport) {
-            <app-pokemon-full-image [pokemon]="pokemon" />
-          } @placeholder (minimum 300ms) {
-            <div class="pokemon-placeholder">
-              <p>{{ pokemon.name | uppercase }}</p>
-            </div>
-          }
+          <button
+            [routerLink]="['/', 'discover-pokemons', 'details', pokemon.name]"
+          >
+            @defer (on viewport) {
+              <app-pokemon-full-image [pokemon]="pokemon" />
+            } @placeholder (minimum 0) {
+              <div class="pokemon-placeholder">
+                <p>{{ pokemon.name | uppercase }}</p>
+              </div>
+            }
+          </button>
         </li>
       }
     </ul>

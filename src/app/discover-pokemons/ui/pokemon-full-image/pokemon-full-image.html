@@ -1,7 +1,7 @@
 @let entity = pokemon();
 <img
   [ngSrc]="entity.shinyImgUrl"
-  width="256"
-  height="256"
+  [width]="size()"
+  [height]="size()"
   [attr.alt]="entity.name"
 />

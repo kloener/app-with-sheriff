@@ -8,7 +8,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideEventBus } from '@shared/public_api';
 
 import { routes } from './app.routes';
@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([])),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideEventBus(),
   ],
 };

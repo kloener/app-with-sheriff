@@ -8,7 +8,6 @@ import { CommandBus } from '@shared/application';
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     providers: [
       provideDiscoverPokemons(),
       provideEnvironmentInitializer(() => {
@@ -28,10 +27,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../page').then((m) => m.DiscoverPokemonPage),
       },
+      {
+        path: 'details/:idOrName',
+        loadComponent: () =>
+          import('../page').then((m) => m.DetailsPokemonPage),
+      },
     ],
-  },
-  {
-    path: '**',
-    redirectTo: '',
   },
 ];

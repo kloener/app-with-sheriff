@@ -1,0 +1,6 @@
+@let pokemonDetails = pokemonDetails$ | async;
+
+@if (pokemonDetails) {
+  <pre>{{ pokemonDetails | json }}</pre>
+  <app-pokemon-full-image [pokemon]="pokemonDetails" size="512" />
+}

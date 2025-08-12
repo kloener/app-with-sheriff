@@ -1,4 +1,5 @@
 import { Pokemon, PokemonRepository } from '@discover-pokemons/domain';
+import { EventBus } from '@shared/application';
 import { GetPokemonsUseCase } from './discover-pokemon.use-cases';
 
 describe('GetPokemonsUseCase', () => {
@@ -23,7 +24,7 @@ describe('GetPokemonsUseCase', () => {
   };
 
   beforeEach(() => {
-    useCase = new GetPokemonsUseCase(mockRepository);
+    useCase = new GetPokemonsUseCase(mockRepository, new EventBus());
   });
 
   it('should rertieve all Pokemon using repository', async () => {
