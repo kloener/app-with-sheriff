@@ -1,10 +1,10 @@
+import { LogAsyncMethod } from '@shared/application/log-async-method.annotation';
 import {
   Command,
   ICommandBus,
   ICommandHandler,
   ICommandHandlerRegistry,
 } from '@shared/domain';
-import { LogMethod } from './log-method.annotation';
 
 export class CommandNotFoundFor extends Error {
   constructor(commandName: string) {
@@ -21,7 +21,7 @@ export class CommandHandlerAlreadySet extends Error {
 export class CommandBus implements ICommandBus, ICommandHandlerRegistry {
   private handlers = new Map<string, ICommandHandler>();
 
-  @LogMethod('info')
+  @LogAsyncMethod('info')
   execute<ReturnType = unknown, CommandType = unknown>(
     command: Command<CommandType, ReturnType>,
   ) {

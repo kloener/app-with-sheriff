@@ -13,7 +13,7 @@ import {
 } from '@discover-pokemons/application/commands';
 import { PokemonFullImage } from '@discover-pokemons/ui';
 import { CommandBus } from '@shared/application';
-import { ObserveIntersection } from '@shared/ui';
+import { ObserveIntersection, RoundPipe, UcfirstPipe } from '@shared/ui';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -23,6 +23,8 @@ import { ObserveIntersection } from '@shared/ui';
     UpperCasePipe,
     AsyncPipe,
     RouterLink,
+    UcfirstPipe,
+    RoundPipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pokemon-list.html',

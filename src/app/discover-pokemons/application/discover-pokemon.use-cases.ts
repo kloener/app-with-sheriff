@@ -4,7 +4,7 @@ import {
 } from '@discover-pokemons/application/commands';
 import { PokemonLoaded } from '@discover-pokemons/domain/events/pokemon-loaded';
 import { PokemonsUpdated } from '@discover-pokemons/domain/events/pokemons-updated';
-import { LogMethod } from '@shared/application';
+import { LogAsyncMethod } from '@shared/application';
 import { ICommandHandler, IEventBus } from '@shared/domain';
 import { BehaviorSubject, map, Observable, OperatorFunction } from 'rxjs';
 import { Pokemon, PokemonRepository } from '../domain';
@@ -60,7 +60,7 @@ export class GetPokemonsUseCase
     private readonly eventBus: IEventBus,
   ) {}
 
-  @LogMethod('info')
+  @LogAsyncMethod('info')
   handle(command: LoadMorePokemonsCommand | LoadPokemonsCommand) {
     if (command instanceof LoadMorePokemonsCommand) {
       this.page += 1;
@@ -68,7 +68,7 @@ export class GetPokemonsUseCase
     return this.execute({ page: this.page, pageSize: this.pageSize });
   }
 
-  @LogMethod('info')
+  @LogAsyncMethod('info')
   async execute(query: GetPokemonsQuery): Promise<Pokemon[]> {
     this.page = query.page;
     this.pageSize = query.pageSize;

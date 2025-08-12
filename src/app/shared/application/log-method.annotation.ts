@@ -16,9 +16,9 @@ export const LogMethod: (
       console.group(
         `LogMethod/${String((target as object).constructor.name)}.${String(propertyKey)}`,
       );
-      console[level](`LogMethod call: ${String(propertyKey)}`, ...args);
+      console[level](`call: ${String(propertyKey)}`, ...args);
       const result = originalMethod.apply(this, args);
-      console[level](`LogMethod result:`, result);
+      console[level](`result:`, result);
       console.groupEnd();
       return result;
     };

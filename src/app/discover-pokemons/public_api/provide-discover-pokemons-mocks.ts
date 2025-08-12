@@ -14,12 +14,12 @@ export const provideDiscoverPokemonsMocks = (): Provider[] => [
               new Pokemon(
                 '1',
                 'Bulbasaur',
+                ['grass', 'poison'],
                 1,
                 45,
                 49,
                 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
                 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png',
-                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
               ),
             ]),
           findById: () => Promise.resolve(null),

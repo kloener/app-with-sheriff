@@ -7,10 +7,25 @@
       @for (pokemon of list; track pokemon.id) {
         <li>
           <button
+            [class]="pokemon.types.join(' ')"
             [routerLink]="['/', 'discover-pokemons', 'details', pokemon.name]"
           >
             @defer (on viewport) {
-              <app-pokemon-full-image [pokemon]="pokemon" size="64" />
+              <p>{{ pokemon.name | ucfirst }}</p>
+              <p class="chips">
+                @for (type of pokemon.types; track type) {
+                  <span class="chip-text">{{ type | ucfirst }}</span>
+                }
+              </p>
+              <app-pokemon-full-image [pokemon]="pokemon" size="72" />
+              <p class="chips">
+                <span class="chip-text"
+                  >{{ pokemon.weight / 10 | round }} kg</span
+                >
+                <span class="chip-text"
+                  >{{ pokemon.height * 10 | round }} cm</span
+                >
+              </p>
             } @placeholder (minimum 0) {
               <div class="pokemon-placeholder">
                 <p>{{ pokemon.name | uppercase }}</p>

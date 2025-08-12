@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LogMethod } from '@shared/application';
+import { LogAsyncMethod } from '@shared/application';
 import { CacheAsyncByParams } from '@shared/utils';
 import { bufferCount, firstValueFrom, map, merge, of, switchMap } from 'rxjs';
 import { Pokemon, PokemonRepository } from '../domain';
@@ -43,7 +43,7 @@ export class HttpPokemonRepository implements PokemonRepository {
     );
   }
 
-  @LogMethod('debug')
+  @LogAsyncMethod('debug')
   @CacheAsyncByParams()
   async findById(idOrName: string): Promise<Pokemon | null> {
     const requestUri = `${this.apiUrl}/${idOrName}`;

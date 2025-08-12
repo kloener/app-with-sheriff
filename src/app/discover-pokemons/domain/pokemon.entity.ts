@@ -8,12 +8,12 @@ export class Pokemon {
   constructor(
     private readonly _id: string,
     private readonly _name: string,
+    private readonly _types: string[],
     private readonly _order: number,
     private readonly _height: number,
     private readonly _weight: number,
     private readonly _frontImgUrl: string,
     private readonly _backImgUrl: string,
-    private readonly _shinyImgUrl: string,
   ) {
     if (!_id || _id.length < 1) {
       throw new PokemonEntityCreationError('Invalid ID: ' + _id);
@@ -21,6 +21,21 @@ export class Pokemon {
     if (!_name || _name.length < 1) {
       throw new PokemonEntityCreationError(
         'Invalid Name: ' + _name + ' for ' + _name + ' / ' + _id,
+      );
+    }
+    if (
+      !_types ||
+      !Array.isArray(_types) ||
+      _types.length < 1 ||
+      _types.some((t) => typeof t !== 'string')
+    ) {
+      throw new PokemonEntityCreationError(
+        'Invalid Types: ' +
+          JSON.stringify(_types) +
+          ' for ' +
+          _name +
+          ' / ' +
+          _id,
       );
     }
     if (_order <= 0 || _order > 1500) {
@@ -38,27 +53,16 @@ export class Pokemon {
         'Invalid Weight: ' + _weight + ' for ' + _name + ' / ' + _id,
       );
     }
-    /**/
     if (!_frontImgUrl || _frontImgUrl.length < 1) {
       throw new PokemonEntityCreationError(
         'Invalid FrontImgUrl: ' + _frontImgUrl + ' for ' + _name + ' / ' + _id,
       );
     }
-    /**/
-    /**/
     if (!_backImgUrl || _backImgUrl.length < 1) {
       throw new PokemonEntityCreationError(
         'Invalid BackImgUrl: ' + _backImgUrl + ' for ' + _name + ' / ' + _id,
       );
     }
-    /**/
-    /**/
-    if (!_shinyImgUrl || _shinyImgUrl.length < 1) {
-      throw new PokemonEntityCreationError(
-        'Invalid ShinyImgUrl: ' + _shinyImgUrl + ' for ' + _name + ' / ' + _id,
-      );
-    }
-    /**/
   }
 
   get id() {
@@ -66,6 +70,9 @@ export class Pokemon {
   }
   get name() {
     return this._name;
+  }
+  get types() {
+    return this._types;
   }
   get order() {
     return this._order;
@@ -81,8 +88,5 @@ export class Pokemon {
   }
   get backImgUrl() {
     return this._backImgUrl;
-  }
-  get shinyImgUrl() {
-    return this._shinyImgUrl;
   }
 }
