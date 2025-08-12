@@ -28,6 +28,11 @@ const mapMapToArray: <T>() => OperatorFunction<Map<string, T>, T[]> =
   () => (source) =>
     source.pipe(map(mapToArray()));
 
+const sortList: <T>(
+  comparator: (a: T, b: T) => number,
+) => OperatorFunction<T[], T[]> = (comparator) => (source) =>
+  source.pipe(map((list) => [...list].sort(comparator)));
+
 export class GetPokemonsUseCase
   implements ICommandHandler<Pokemon[], LoadMorePokemonsCommand>
 {
@@ -39,7 +44,10 @@ export class GetPokemonsUseCase
 
   public readonly pokemonList$: Observable<Pokemon[]> = this.pokemonList$$
     .asObservable()
-    .pipe(mapMapToArray());
+    .pipe(
+      mapMapToArray(),
+      sortList((a, b) => a.order - b.order),
+    );
 
   constructor(
     private readonly pokemonRepository: PokemonRepository,
