@@ -20,14 +20,16 @@ export class CommandHandlerAlreadySet extends Error {
 export class CommandBus implements ICommandBus, ICommandHandlerRegistry {
   private handlers = new Map<string, ICommandHandler>();
 
-  execute(command: Command) {
+  execute<ReturnType = unknown, CommandType = unknown>(
+    command: Command<CommandType, ReturnType>,
+  ) {
     const handler = this.handlers.get(command.commandName);
-    console.log('Executing command:', command.commandName, handler);
     if (!handler) {
       throw new CommandNotFoundFor(command.commandName);
     }
-
-    return handler.handle(command);
+    return (handler as ICommandHandler<ReturnType, CommandType>).handle(
+      command,
+    );
   }
 
   register(commandName: string, handler: ICommandHandler) {
