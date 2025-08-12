@@ -10,7 +10,7 @@
             [routerLink]="['/', 'discover-pokemons', 'details', pokemon.name]"
           >
             @defer (on viewport) {
-              <app-pokemon-full-image [pokemon]="pokemon" />
+              <app-pokemon-full-image [pokemon]="pokemon" size="64" />
             } @placeholder (minimum 0) {
               <div class="pokemon-placeholder">
                 <p>{{ pokemon.name | uppercase }}</p>
@@ -20,10 +20,13 @@
         </li>
       }
     </ul>
-    <hr
-      style="visibility: hidden"
+    <p>Zeige {{ list.length }} Pokemons an.</p>
+    <button
+      (click)="loadMorePokemon()"
       (appObserveIntersection)="$event ? loadMorePokemon() : null"
-    />
+    >
+      Lade mehr
+    </button>
   }
 } @else {
   <p>Lade Pokemons ...</p>

@@ -8,7 +8,10 @@ import {
   GetPokemonDetailsUseCase,
   GetPokemonsUseCase,
 } from '@discover-pokemons/application';
-import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
+import {
+  LoadMorePokemonsCommand,
+  LoadPokemonsCommand,
+} from '@discover-pokemons/application/commands';
 import { HttpPokemonRepository } from '@discover-pokemons/infrastructure';
 import { CommandBus, EventBus } from '@shared/application';
 import type { IEventBus } from '@shared/domain';
@@ -38,5 +41,6 @@ export const provideDiscoverPokemons = (): (
     const getPokemonsUseCase = inject(GetPokemonsUseCase);
 
     commandBus.register(LoadMorePokemonsCommand.name, getPokemonsUseCase);
+    commandBus.register(LoadPokemonsCommand.name, getPokemonsUseCase);
   }),
 ];

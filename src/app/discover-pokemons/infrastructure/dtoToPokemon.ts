@@ -13,5 +13,5 @@ export const dtoToPokemon = (dto: PokemonDetailDTO): Pokemon =>
     dto.weight,
     dto.sprites.front_default,
     dto.sprites.back_default,
-    dto.sprites.other['official-artwork'].front_default,
+    dto.sprites.other['showdown'].front_default,
   );

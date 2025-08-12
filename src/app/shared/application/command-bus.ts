@@ -4,6 +4,7 @@ import {
   ICommandHandler,
   ICommandHandlerRegistry,
 } from '@shared/domain';
+import { LogMethod } from './log-method.annotation';
 
 export class CommandNotFoundFor extends Error {
   constructor(commandName: string) {
@@ -20,6 +21,7 @@ export class CommandHandlerAlreadySet extends Error {
 export class CommandBus implements ICommandBus, ICommandHandlerRegistry {
   private handlers = new Map<string, ICommandHandler>();
 
+  @LogMethod('info')
   execute<ReturnType = unknown, CommandType = unknown>(
     command: Command<CommandType, ReturnType>,
   ) {

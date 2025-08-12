@@ -1,6 +1,10 @@
-import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
+import {
+  LoadMorePokemonsCommand,
+  LoadPokemonsCommand,
+} from '@discover-pokemons/application/commands';
 import { PokemonLoaded } from '@discover-pokemons/domain/events/pokemon-loaded';
 import { PokemonsUpdated } from '@discover-pokemons/domain/events/pokemons-updated';
+import { LogMethod } from '@shared/application';
 import { ICommandHandler, IEventBus } from '@shared/domain';
 import { BehaviorSubject, map, Observable, OperatorFunction } from 'rxjs';
 import { Pokemon, PokemonRepository } from '../domain';
@@ -34,7 +38,9 @@ const sortList: <T>(
   source.pipe(map((list) => [...list].sort(comparator)));
 
 export class GetPokemonsUseCase
-  implements ICommandHandler<Pokemon[], LoadMorePokemonsCommand>
+  implements
+    ICommandHandler<Pokemon[], LoadMorePokemonsCommand>,
+    ICommandHandler<Pokemon[], LoadPokemonsCommand>
 {
   private page = 1;
   private pageSize = 20;
@@ -54,11 +60,15 @@ export class GetPokemonsUseCase
     private readonly eventBus: IEventBus,
   ) {}
 
-  handle(_command: LoadMorePokemonsCommand) {
-    this.page += 1;
+  @LogMethod('info')
+  handle(command: LoadMorePokemonsCommand | LoadPokemonsCommand) {
+    if (command instanceof LoadMorePokemonsCommand) {
+      this.page += 1;
+    }
     return this.execute({ page: this.page, pageSize: this.pageSize });
   }
 
+  @LogMethod('info')
   async execute(query: GetPokemonsQuery): Promise<Pokemon[]> {
     this.page = query.page;
     this.pageSize = query.pageSize;
@@ -77,7 +87,7 @@ export class GetPokemonsUseCase
   private updatePokemonList(result: Pokemon[]) {
     const currentMap = this.pokemonList$$.getValue();
     for (const pokemon of result) {
-      currentMap.set(pokemon.id, pokemon);
+      currentMap.set(pokemon.name, pokemon);
     }
     this.pokemonList$$.next(new Map<string, Pokemon>([...currentMap]));
   }
