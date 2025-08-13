@@ -18,6 +18,24 @@ export const provideDiscoverPokemonsMocks = (): Provider[] => [
                 1,
                 45,
                 49,
+                'Bulbasaur',
+                ['overgrow', 'chlorophyll'],
+                {
+                  hp: 45,
+                  attack: 49,
+                  defense: 49,
+                  'special-attack': 65,
+                  'special-defense': 65,
+                  speed: 45,
+                } satisfies Record<
+                  | 'hp'
+                  | 'attack'
+                  | 'defense'
+                  | 'special-attack'
+                  | 'special-defense'
+                  | 'speed',
+                  number
+                >,
                 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
                 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png',
               ),

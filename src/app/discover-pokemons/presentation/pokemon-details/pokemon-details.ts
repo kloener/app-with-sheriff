@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,12 +8,20 @@ import {
 import { toObservable } from '@angular/core/rxjs-interop';
 import { GetPokemonDetailsUseCase } from '@discover-pokemons/application';
 import { PokemonFullImage } from '@discover-pokemons/ui';
+import { JoinPipe, PadPipe, RoundPipe, UcfirstPipe } from '@shared/ui';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon-details',
-  imports: [JsonPipe, AsyncPipe, PokemonFullImage],
+  imports: [
+    AsyncPipe,
+    PokemonFullImage,
+    PadPipe,
+    RoundPipe,
+    JoinPipe,
+    UcfirstPipe,
+  ],
   templateUrl: './pokemon-details.html',
   styleUrl: './pokemon-details.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

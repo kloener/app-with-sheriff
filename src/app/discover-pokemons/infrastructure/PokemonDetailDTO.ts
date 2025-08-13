@@ -14,6 +14,26 @@ export interface PokemonDetailDTO {
   order: number;
   height: number;
   weight: number;
+  abilities: {
+    is_hidden: boolean;
+    slot: number;
+    ability: {
+      name: string;
+      url: string;
+    };
+  }[];
+  stats: {
+    base_stat: number;
+    effort: number;
+    stat: {
+      name: string;
+      url: string;
+    };
+  }[];
+  species: {
+    name: string;
+    url: string;
+  };
   sprites: {
     front_default: string;
     back_default: string;

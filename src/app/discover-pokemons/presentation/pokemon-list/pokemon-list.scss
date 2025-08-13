@@ -1,4 +1,6 @@
+@use "../../../../styles/mixins" as mixins;
 $pokemonSize: 128px;
+
 ul {
   list-style: none;
   display: grid;
@@ -23,98 +25,16 @@ ul {
   }
 }
 
-p {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.chips {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.25rem;
-  justify-content: center;
-  align-items: center;
-
-  .chip-text {
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 0.6666rem;
-    border-radius: 0.5rem;
-    padding: 0.25rem;
-    background-color: rgba(255, 255, 255, 0.25);
-  }
-}
-
 button {
-  --pokemon-background-button-color: transparent;
+  --pokemon-button-background-color: transparent;
   --pokemon-button-border-color: #ccccccee;
   border-radius: 1rem;
-  background: var(--pokemon-background-button-color);
+  background: var(--pokemon-button-background-color);
   border: 3px solid var(--pokemon-button-border-color);
+  color: var(--pokemon-button-text-color);
   outline: 0 none;
   padding: 1rem;
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 
-  &.poison {
-    --pokemon-background-button-color: #a040a0bb;
-    --pokemon-button-border-color: #a040a0ff;
-  }
-  &.water {
-    --pokemon-background-button-color: #6890f0bb;
-    --pokemon-button-border-color: #6890f0ff;
-  }
-  &.bug {
-    --pokemon-background-button-color: #a8b820bb;
-    --pokemon-button-border-color: #a8b820ff;
-  }
-  &.flying {
-    --pokemon-background-button-color: #a890f0bb;
-    --pokemon-button-border-color: #a890f0ff;
-  }
-  &.fairy {
-    --pokemon-background-button-color: #f0b6c1bb;
-    --pokemon-button-border-color: #f0b6c1ff;
-  }
-  &.ground {
-    --pokemon-background-button-color: #915d12bb;
-    --pokemon-button-border-color: #915d12ff;
-  }
-  &.grass {
-    --pokemon-background-button-color: #78c850bb;
-    --pokemon-button-border-color: #78c850ff;
-  }
-  &.psychic {
-    --pokemon-background-button-color: #f85888bb;
-    --pokemon-button-border-color: #f85888ff;
-  }
-  &.fighting {
-    --pokemon-background-button-color: #c03028bb;
-    --pokemon-button-border-color: #c03028ff;
-  }
-  &.rock {
-    --pokemon-background-button-color: #9e9898bb;
-    --pokemon-button-border-color: #9e9898ff;
-  }
-  &.electric {
-    --pokemon-background-button-color: #f8d030bb;
-    --pokemon-button-border-color: #f8d030ff;
-  }
-  &.dragon {
-    --pokemon-background-button-color: #30f88dbb;
-    --pokemon-button-border-color: #30f88dff;
-  }
-  &.ghost {
-    --pokemon-background-button-color: #705898bb;
-    --pokemon-button-border-color: #705898ff;
-  }
-  &.dark {
-    --pokemon-background-button-color: #4c4c4cbb;
-    --pokemon-button-border-color: #4c4c4cff;
-  }
-  &.ice {
-    --pokemon-background-button-color: #00ecffbb;
-    --pokemon-button-border-color: #00ecffff;
-  }
-  &.fire {
-    --pokemon-background-button-color: #f08030bb;
-    --pokemon-button-border-color: #f08030ff;
-  }
+  @include mixins.types-background(--pokemon-button);
 }

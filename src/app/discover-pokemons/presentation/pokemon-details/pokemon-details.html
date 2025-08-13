@@ -1,6 +1,43 @@
 @let pokemonDetails = pokemonDetails$ | async;
 
 @if (pokemonDetails) {
-  <pre>{{ pokemonDetails | json }}</pre>
-  <app-pokemon-full-image [pokemon]="pokemonDetails" size="512" />
+  <section>
+    <header [class]="pokemonDetails.types | join: ' '">
+      <h1>{{ pokemonDetails.name | ucfirst }}</h1>
+      <sub>#{{ pokemonDetails.id | pad: "0000" }}</sub>
+      <p class="chips">
+        @for (type of pokemonDetails.types; track type) {
+          <span class="chip-text">{{ type | ucfirst }}</span>
+        }
+      </p>
+      <app-pokemon-full-image [pokemon]="pokemonDetails" size="256" />
+    </header>
+    <div class="pokemon-details">
+      <dl class="info">
+        <dt>Weight</dt>
+        <dd>{{ pokemonDetails.weight / 10 | round }} kg</dd>
+        <dt>Height</dt>
+        <dd>{{ pokemonDetails.height * 10 | round }} cm</dd>
+        <dt>Species</dt>
+        <dd>{{ pokemonDetails.species }}</dd>
+        <dt>Abilities</dt>
+        <dd>{{ pokemonDetails.abilities | join: ", " }}</dd>
+      </dl>
+
+      <dl class="stats">
+        <dt>HP</dt>
+        <dd>{{ pokemonDetails.stats.hp }}</dd>
+        <dt>Attack</dt>
+        <dd>{{ pokemonDetails.stats.attack }}</dd>
+        <dt>Defense</dt>
+        <dd>{{ pokemonDetails.stats.defense }}</dd>
+        <dt>Sp. Atk</dt>
+        <dd>{{ pokemonDetails.stats["special-attack"] }}</dd>
+        <dt>Sp. Def</dt>
+        <dd>{{ pokemonDetails.stats["special-defense"] }}</dd>
+        <dt>Speed</dt>
+        <dd>{{ pokemonDetails.stats.speed }}</dd>
+      </dl>
+    </div>
+  </section>
 }

@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+.chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
+
+  .chip-text {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.6666em;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+}

@@ -1,0 +1,87 @@
+@mixin types-background($varNamePrefix: --pokemon) {
+  &.normal {
+    #{$varNamePrefix}-background-color: transparent;
+    #{$varNamePrefix}-border-color: #cccccc44;
+    #{$varNamePrefix}-text-color: #000000aa;
+  }
+  &.poison {
+    #{$varNamePrefix}-background-color: #a040a0bb;
+    #{$varNamePrefix}-border-color: #a040a0ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.water {
+    #{$varNamePrefix}-background-color: #6890f0bb;
+    #{$varNamePrefix}-border-color: #6890f0ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.bug {
+    #{$varNamePrefix}-background-color: #a8b820bb;
+    #{$varNamePrefix}-border-color: #a8b820ff;
+    #{$varNamePrefix}-text-color: #000000aa;
+  }
+  &.flying {
+    #{$varNamePrefix}-background-color: #a890f0bb;
+    #{$varNamePrefix}-border-color: #a890f0ff;
+    #{$varNamePrefix}-text-color: #000000aa;
+  }
+  &.fairy {
+    #{$varNamePrefix}-background-color: #f0b6c1bb;
+    #{$varNamePrefix}-border-color: #f0b6c1ff;
+    #{$varNamePrefix}-text-color: #000000aa;
+  }
+  &.ground {
+    #{$varNamePrefix}-background-color: #915d12bb;
+    #{$varNamePrefix}-border-color: #915d12ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.grass {
+    #{$varNamePrefix}-background-color: #78c850bb;
+    #{$varNamePrefix}-border-color: #78c850ff;
+    #{$varNamePrefix}-text-color: #000000aa;
+  }
+  &.psychic {
+    #{$varNamePrefix}-background-color: #f85888bb;
+    #{$varNamePrefix}-border-color: #f85888ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.fighting {
+    #{$varNamePrefix}-background-color: #c03028bb;
+    #{$varNamePrefix}-border-color: #c03028ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.rock {
+    #{$varNamePrefix}-background-color: #9e9898bb;
+    #{$varNamePrefix}-border-color: #9e9898ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.electric {
+    #{$varNamePrefix}-background-color: #f8d030bb;
+    #{$varNamePrefix}-border-color: #f8d030ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.dragon {
+    #{$varNamePrefix}-background-color: #30f88dbb;
+    #{$varNamePrefix}-border-color: #30f88dff;
+    #{$varNamePrefix}-text-color: #000000aa;
+  }
+  &.ghost {
+    #{$varNamePrefix}-background-color: #705898bb;
+    #{$varNamePrefix}-border-color: #705898ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.dark {
+    #{$varNamePrefix}-background-color: #4c4c4cbb;
+    #{$varNamePrefix}-border-color: #4c4c4cff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+  &.ice {
+    #{$varNamePrefix}-background-color: #00ecffbb;
+    #{$varNamePrefix}-border-color: #00ecffff;
+    #{$varNamePrefix}-text-color: #000000aa;
+  }
+  &.fire {
+    #{$varNamePrefix}-background-color: #f08030bb;
+    #{$varNamePrefix}-border-color: #f08030ff;
+    #{$varNamePrefix}-text-color: #ffffffaa;
+  }
+}

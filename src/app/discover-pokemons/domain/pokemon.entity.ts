@@ -12,6 +12,17 @@ export class Pokemon {
     private readonly _order: number,
     private readonly _height: number,
     private readonly _weight: number,
+    private readonly _species: string,
+    private readonly _abilities: string[],
+    private readonly _stats: Record<
+      | 'hp'
+      | 'attack'
+      | 'defense'
+      | 'special-attack'
+      | 'special-defense'
+      | 'speed',
+      number
+    >,
     private readonly _frontImgUrl: string,
     private readonly _backImgUrl: string,
   ) {
@@ -53,6 +64,21 @@ export class Pokemon {
         'Invalid Weight: ' + _weight + ' for ' + _name + ' / ' + _id,
       );
     }
+    if (!_species) {
+      throw new PokemonEntityCreationError(
+        'Invalid Species: ' + _species + ' for ' + _name + ' / ' + _id,
+      );
+    }
+    if (!_abilities) {
+      throw new PokemonEntityCreationError(
+        'Invalid Abilities: ' + _abilities + ' for ' + _name + ' / ' + _id,
+      );
+    }
+    if (!_stats) {
+      throw new PokemonEntityCreationError(
+        'Invalid Stats: ' + _stats + ' for ' + _name + ' / ' + _id,
+      );
+    }
     if (!_frontImgUrl || _frontImgUrl.length < 1) {
       throw new PokemonEntityCreationError(
         'Invalid FrontImgUrl: ' + _frontImgUrl + ' for ' + _name + ' / ' + _id,
@@ -82,6 +108,15 @@ export class Pokemon {
   }
   get weight() {
     return this._weight;
+  }
+  get species() {
+    return this._species;
+  }
+  get abilities() {
+    return this._abilities;
+  }
+  get stats() {
+    return this._stats;
   }
   get frontImgUrl() {
     return this._frontImgUrl;
