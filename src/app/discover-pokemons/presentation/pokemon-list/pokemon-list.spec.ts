@@ -13,6 +13,7 @@ import { Pokemon, PokemonBuilder } from '@discover-pokemons/domain';
 import { CommandBus } from '@shared/application';
 import { provideEventBus } from '@shared/public_api';
 import { render, RenderResult } from '@testing-library/angular';
+import { of } from 'rxjs';
 import { PokemonList } from './pokemon-list';
 
 describe('PokemonList', () => {
@@ -32,6 +33,7 @@ describe('PokemonList', () => {
         {
           provide: GetPokemonsUseCase,
           useValue: {
+            pokemonList$: of([...pokemonList]),
             execute: () => Promise.resolve([...pokemonList]),
             handle: () => Promise.resolve([...pokemonList]),
           },

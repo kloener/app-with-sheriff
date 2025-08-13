@@ -1,8 +1,16 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import {
+  inject,
+  provideEnvironmentInitializer,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { DeferBlockState } from '@angular/core/testing';
 import { GetPokemonsUseCase } from '@discover-pokemons/application';
+import {
+  LoadMorePokemonsCommand,
+  LoadPokemonsCommand,
+} from '@discover-pokemons/application/commands';
 import { PokemonBuilder } from '@discover-pokemons/domain';
-import { EventBus } from '@shared/application';
+import { CommandBus, EventBus } from '@shared/application';
 import { provideEventBus } from '@shared/public_api';
 import { render } from '@testing-library/angular';
 
@@ -15,6 +23,13 @@ describe('DiscoverPokemonPage', () => {
       providers: [
         provideZonelessChangeDetection(),
         provideEventBus(),
+        provideEnvironmentInitializer(() => {
+          const commandBus = inject(CommandBus);
+          const getPokemonsUseCase = inject(GetPokemonsUseCase);
+
+          commandBus.register(LoadMorePokemonsCommand.name, getPokemonsUseCase);
+          commandBus.register(LoadPokemonsCommand.name, getPokemonsUseCase);
+        }),
         {
           provide: GetPokemonsUseCase,
           useFactory: () =>
