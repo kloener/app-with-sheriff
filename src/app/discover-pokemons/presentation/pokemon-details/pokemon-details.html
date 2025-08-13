@@ -19,9 +19,9 @@
         <dt>Height</dt>
         <dd>{{ pokemonDetails.height * 10 | round }} cm</dd>
         <dt>Species</dt>
-        <dd>{{ pokemonDetails.species }}</dd>
+        <dd>{{ pokemonDetails.species | ucfirst }}</dd>
         <dt>Abilities</dt>
-        <dd>{{ pokemonDetails.abilities | join: ", " }}</dd>
+        <dd>{{ pokemonDetails.abilities | ucfirst | join: ", " }}</dd>
       </dl>
 
       <dl class="stats">

@@ -1,6 +1,7 @@
 <img
-  [ngSrc]="imageUrl()"
-  [width]="size()"
+  [src]="imageUrl()"
+  loading="lazy"
   [height]="size()"
+  [width]="size()"
   [attr.alt]="pokemon().name"
 />
