@@ -2,8 +2,10 @@ import {
   LoadMorePokemonsCommand,
   LoadPokemonsCommand,
 } from '@discover-pokemons/application/commands';
-import { PokemonLoaded } from '@discover-pokemons/domain/events/pokemon-loaded';
-import { PokemonsUpdated } from '@discover-pokemons/domain/events/pokemons-updated';
+import {
+  PokemonLoaded,
+  PokemonsUpdated,
+} from '@discover-pokemons/domain/events';
 import { LogAsyncMethod } from '@shared/application';
 import { ICommandHandler, IEventBus } from '@shared/domain';
 import { BehaviorSubject, map, Observable, OperatorFunction } from 'rxjs';
