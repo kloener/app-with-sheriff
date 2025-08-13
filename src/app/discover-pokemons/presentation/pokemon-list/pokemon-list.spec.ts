@@ -5,8 +5,11 @@ import {
 } from '@angular/core';
 import { DeferBlockState } from '@angular/core/testing';
 import { GetPokemonsUseCase } from '@discover-pokemons/application';
-import { LoadMorePokemonsCommand } from '@discover-pokemons/application/commands';
-import { Pokemon } from '@discover-pokemons/domain';
+import {
+  LoadMorePokemonsCommand,
+  LoadPokemonsCommand,
+} from '@discover-pokemons/application/commands';
+import { Pokemon, PokemonBuilder } from '@discover-pokemons/domain';
 import { CommandBus } from '@shared/application';
 import { provideEventBus } from '@shared/public_api';
 import { render, RenderResult } from '@testing-library/angular';
@@ -24,6 +27,7 @@ describe('PokemonList', () => {
           const getPokemonsUseCase = inject(GetPokemonsUseCase);
 
           commandBus.register(LoadMorePokemonsCommand.name, getPokemonsUseCase);
+          commandBus.register(LoadPokemonsCommand.name, getPokemonsUseCase);
         }),
         {
           provide: GetPokemonsUseCase,
@@ -54,16 +58,7 @@ describe('PokemonList', () => {
 
   it('should render list containing items', async () => {
     const result = await setup([
-      new Pokemon(
-        '1',
-        'Bulbasaur',
-        1,
-        45,
-        49,
-        'https://pokemon.api/1.png',
-        'https://pokemon.api/back/1.png',
-        'https://pokemon.api/shiny/1.png',
-      ),
+      PokemonBuilder.createWithBulbasaurDefaults().build(),
     ]);
     await updateAllDeferBlocks(result, DeferBlockState.Complete);
     await result.fixture.whenStable();
@@ -73,16 +68,7 @@ describe('PokemonList', () => {
 
   it('should load more Pokemons when intersecting', async () => {
     const result = await setup([
-      new Pokemon(
-        '1',
-        'Bulbasaur',
-        1,
-        45,
-        49,
-        'https://pokemon.api/1.png',
-        'https://pokemon.api/back/1.png',
-        'https://pokemon.api/shiny/1.png',
-      ),
+      PokemonBuilder.createWithBulbasaurDefaults().build(),
     ]);
 
     result.fixture.componentInstance.loadMorePokemon();

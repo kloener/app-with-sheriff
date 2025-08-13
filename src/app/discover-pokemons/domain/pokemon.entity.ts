@@ -1,9 +1,12 @@
+import { PokemonStats } from '@discover-pokemons/domain/pokemon-stats';
+
 class PokemonEntityCreationError extends Error {
   constructor(message: string) {
     super(message);
     this.name = 'PokemonEntityCreationError';
   }
 }
+
 export class Pokemon {
   constructor(
     private readonly _id: string,
@@ -14,15 +17,7 @@ export class Pokemon {
     private readonly _weight: number,
     private readonly _species: string,
     private readonly _abilities: string[],
-    private readonly _stats: Record<
-      | 'hp'
-      | 'attack'
-      | 'defense'
-      | 'special-attack'
-      | 'special-defense'
-      | 'speed',
-      number
-    >,
+    private readonly _stats: PokemonStats,
     private readonly _frontImgUrl: string,
     private readonly _backImgUrl: string,
   ) {

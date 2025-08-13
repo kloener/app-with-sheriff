@@ -1,19 +1,14 @@
-import { Pokemon, PokemonRepository } from '@discover-pokemons/domain';
+import {
+  Pokemon,
+  PokemonBuilder,
+  PokemonRepository,
+} from '@discover-pokemons/domain';
 import { EventBus } from '@shared/application';
 import { GetPokemonsUseCase } from './discover-pokemon.use-cases';
 
 describe('GetPokemonsUseCase', () => {
   let useCase: GetPokemonsUseCase;
-  const mockPokemon = new Pokemon(
-    '1',
-    'Bulbasaur',
-    1,
-    45,
-    49,
-    'example.jpg',
-    'example.jpg',
-    'example.jpg',
-  );
+  const mockPokemon = PokemonBuilder.createWithBulbasaurDefaults().build();
   const mockRepository: PokemonRepository = {
     findAll(_page: number, _pageSize: number): Promise<Pokemon[]> {
       return Promise.resolve([mockPokemon]);
