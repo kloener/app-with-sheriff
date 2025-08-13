@@ -7,7 +7,7 @@
       @for (pokemon of list; track pokemon.id) {
         <li>
           <button
-            [class]="pokemon.types.join(' ')"
+            [class]="pokemon.types | join: ' '"
             [routerLink]="['/', 'discover-pokemons', 'details', pokemon.name]"
           >
             @defer (on viewport) {

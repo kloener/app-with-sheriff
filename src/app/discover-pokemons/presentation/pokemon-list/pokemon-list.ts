@@ -13,7 +13,12 @@ import {
 } from '@discover-pokemons/application/commands';
 import { PokemonFullImage } from '@discover-pokemons/ui';
 import { CommandBus } from '@shared/application';
-import { ObserveIntersection, RoundPipe, UcfirstPipe } from '@shared/ui';
+import {
+  JoinPipe,
+  ObserveIntersection,
+  RoundPipe,
+  UcfirstPipe,
+} from '@shared/ui';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -25,6 +30,7 @@ import { ObserveIntersection, RoundPipe, UcfirstPipe } from '@shared/ui';
     RouterLink,
     UcfirstPipe,
     RoundPipe,
+    JoinPipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pokemon-list.html',

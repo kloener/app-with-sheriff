@@ -14,15 +14,13 @@ export const LogAsyncMethod: (
     const originalMethod = descriptor.value;
     descriptor.value = async function (...args: unknown[]): Promise<Result> {
       console[level](
-        `LogAsyncMethod/${String((target as object).constructor.name)}.${String(propertyKey)}`,
-      );
-      console[level](
         `LogAsyncMethod/${String((target as object).constructor.name)}.${String(propertyKey)}->call: ${String(propertyKey)}`,
         ...args,
       );
       const result = await originalMethod.apply(this, args);
       console[level](
         `LogAsyncMethod/${String((target as object).constructor.name)}.${String(propertyKey)}->result:`,
+        ...args,
         result,
       );
       return result;

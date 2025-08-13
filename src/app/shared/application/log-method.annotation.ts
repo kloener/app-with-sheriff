@@ -18,7 +18,7 @@ export const LogMethod: (
       );
       console[level](`call: ${String(propertyKey)}`, ...args);
       const result = originalMethod.apply(this, args);
-      console[level](`result:`, result);
+      console[level](`result:`, ...args, result);
       console.groupEnd();
       return result;
     };
