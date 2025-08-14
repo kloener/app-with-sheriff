@@ -1,0 +1,22 @@
+@use "../../../../../styles/mixins" as mixins;
+header {
+  --pokemon-details-header-background-color: transparent;
+  background: var(--pokemon-details-header-background-color);
+  color: var(--pokemon-details-header-text-color);
+  padding: 1rem;
+
+  @include mixins.types-background(--pokemon-details-header);
+
+  sub {
+    position: absolute;
+    right: 1rem;
+    margin-top: -3rem;
+  }
+}
+
+.pokemon-details {
+  background: white;
+  padding: 1rem;
+  border-radius: 2rem;
+  margin-top: -3rem;
+}

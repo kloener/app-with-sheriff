@@ -1,4 +1,4 @@
-export * from './pokemon.entity';
+export * from './entities/pokemon.entity';
 export * from './pokemon.repository';
-export * from './pokemon-stats';
-export * from './pokemon-builder';
+export * from './entities/pokemon-stats';
+export * from './entities/pokemon-builder';

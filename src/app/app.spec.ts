@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from '@app/app.routes';
-import { provideEventBus } from '@shared/public_api';
+import { provideEventBus } from '@shared/providers';
 import { render } from '@testing-library/angular';
 import { App } from './app';
 

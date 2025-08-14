@@ -9,7 +9,7 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideEventBus } from '@shared/public_api';
+import { provideEventBus } from '@shared/providers';
 
 import { routes } from './app.routes';
 

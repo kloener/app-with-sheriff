@@ -1,4 +1,4 @@
-import { anyTag, sameTag, SheriffConfig } from '@softarc/sheriff-core';
+import { sameTag, SheriffConfig } from '@softarc/sheriff-core';
 
 /**
  * Clean Architecture Configuration for Sheriff
@@ -21,21 +21,21 @@ export const config: SheriffConfig = {
      *   - ./application (domain:bookings, type:application)
      *   - ./infrastructure (domain:bookings, type:infrastructure)
      *   - ./presentation (domain:bookings, type:presentation)
-     *   - ./ui (domain:bookings, type:ui)
      *   - ./utils (domain:bookings, type:utils)
-     *   - ./page (domain:bookings, type:page)
-     *   - ./public_api (domain:bookings, type:public_api)
      */
     'src/app/<domain>': {
       // src/app/bookings/infrastructure
+      // src/app/bookings/presentation
       '<type>': ['domain:<domain>', 'type:<type>'],
       // src/app/bookings/domain/events
+      // src/app/bookings/application/commands
       '<type>/<subType>': [
         'domain:<domain>',
         'type:<type>',
         'subType:<subType>',
       ],
-      // src/app/presentation/infrastructure
+      // src/app/bookings/presentation/components/booking-list
+      // src/app/bookings/presentation/pages/booking-page
       '<type>/<subType>/<subFolder>': [
         'domain:<domain>',
         'type:<type>',
@@ -57,7 +57,6 @@ export const config: SheriffConfig = {
       'type:domain',
       'type:application',
       'type:infrastructure',
-      'type:page',
     ],
     /**
      * Domain Layer containing entities, value objects, and domain services.
@@ -83,32 +82,39 @@ export const config: SheriffConfig = {
       sameTag,
       'type:domain',
       'type:application',
-      'type:public_api', // Note, currently only needed for integration-tests.
-      'type:ui',
+      'type:providers',
       'type:utils',
     ],
     /**
-     * Page Layer containing page components.
+     * Providers for dependency injection and service providers.
      */
-    'type:page': [
-      'type:presentation',
+    'type:providers': [
+      sameTag,
       'type:domain',
       'type:application',
-      'type:public_api', // Note, currently only needed for integration-tests.
-      'type:ui',
+      'type:infrastructure',
       'type:utils',
     ],
     /**
-     * UI Layer containing reusable UI components (aka dumb components).
+     * Routes Layer defining application routes and navigation.
      */
-    'type:ui': [sameTag, 'type:utils', 'type:domain'],
+    'type:routes': [
+      sameTag,
+      'type:domain',
+      'type:application',
+      'type:presentation',
+      'type:providers',
+      'type:utils',
+    ],
     /**
      * Utils Layer containing utility functions and shared logic.
      */
     'type:utils': [sameTag, 'type:domain'],
+    /**
+     * subTypes like "pages" or "events" or "commands" can access others of their kind.
+     */
+    'subType:*': [sameTag, 'domain:*', 'type:*'],
 
-    'subType:*': [anyTag],
-
-    root: ['domain:*', 'type:public_api', 'type:page'],
+    root: ['domain:*'],
   },
 };

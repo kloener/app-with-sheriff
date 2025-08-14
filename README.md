@@ -24,15 +24,12 @@ In this project I've followed the principles of Clean Architecture by organizing
   - **Presentation Layer**: Contains the UI components and presentation logic. It interacts with the application layer to display data and handle user interactions.
   - **Infrastructure Layer**: Contains external dependencies, such as API clients, database access, and other services. This layer is responsible for communicating with external systems and providing data to the application layer.
 
-And I've added more layers: public_api, utils and ui
+And I've added more layers:
 
-- **UI Layer**: Contains reusable UI components and styles. There is no dependency to the application layer. Data is provided through inputs and outputs. These kind of components are very easy to test and can be used in different parts of the application.
-- **Utils Layer**: Contains utility functions and helpers that are used across the application. This layer provides common functionality that can be reused in different parts of the application. Utilities can only access the domain layer for data types and basic domain services.
-- **Public API Layer**: This layer extends the infrastructure layer by providing functions specific for the surrounding framework, like `provideEventBus` function or `routes`. Additionally, it can be used to expose the application layer's functionality to other domains or external systems.
+- **Providers Layer**: In addition to the infrastructure layer, we need to provide and inject services accordingly. This layer contains the providers that are used to inject services into the application. It helps to manage dependencies on the domain side.
+- **Routes Layer**: Contains the routing configuration of a domain modules.
 
-- **Shared Layer**: Contains shared utilities, constants, and types that are used across the application. This layer helps to avoid duplication and keeps the codebase clean.
-
-- **Testing Layer**: Contains unit and integration tests for the application. This layer ensures that the application behaves as expected and helps to catch bugs early in the development process.
+- **Shared Domain**: Contains shared utilities, constants, and types that are used across the application. This layer helps to avoid duplication and keeps the codebase clean.
 
 ## Installation
 
