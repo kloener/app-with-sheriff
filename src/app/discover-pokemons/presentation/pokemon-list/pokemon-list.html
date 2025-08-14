@@ -1,4 +1,4 @@
-@let list = pokemonList$ | async;
+@let list = pokemonList$();
 @if (list) {
   @if (list.length === 0) {
     <p>Keine Pokemons gefunden.</p>

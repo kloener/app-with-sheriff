@@ -9,7 +9,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { GetPokemonDetailsUseCase } from '@discover-pokemons/application';
 import { PokemonFullImage } from '@discover-pokemons/ui';
 import { JoinPipe, PadPipe, RoundPipe, UcfirstPipe } from '@shared/ui';
-import { from } from 'rxjs';
+import { from, startWith } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -35,5 +35,6 @@ export class PokemonDetails {
     switchMap((idOrName) =>
       from(this.getPokemonDetailsUseCase.execute({ idOrName })),
     ),
+    startWith(null),
   );
 }

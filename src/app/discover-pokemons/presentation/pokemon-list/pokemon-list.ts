@@ -1,4 +1,4 @@
-import { AsyncPipe, UpperCasePipe } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -26,7 +26,6 @@ import {
     PokemonFullImage,
     ObserveIntersection,
     UpperCasePipe,
-    AsyncPipe,
     RouterLink,
     UcfirstPipe,
     RoundPipe,

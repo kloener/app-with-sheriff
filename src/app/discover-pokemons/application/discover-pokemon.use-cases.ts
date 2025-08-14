@@ -1,3 +1,4 @@
+import { computed, Signal, signal } from '@angular/core';
 import {
   LoadMorePokemonsCommand,
   LoadPokemonsCommand,
@@ -8,7 +9,6 @@ import {
 } from '@discover-pokemons/domain/events';
 import { LogAsyncMethod } from '@shared/application';
 import { ICommandHandler, IEventBus } from '@shared/domain';
-import { BehaviorSubject, map, Observable, OperatorFunction } from 'rxjs';
 import { Pokemon, PokemonRepository } from '../domain';
 
 class PokemonNotFoundError extends Error {
@@ -30,15 +30,6 @@ function mapToArray<T>(): (list: Map<string, T>) => T[] {
   return (mapList) => Array.from(mapList.values());
 }
 
-const mapMapToArray: <T>() => OperatorFunction<Map<string, T>, T[]> =
-  () => (source) =>
-    source.pipe(map(mapToArray()));
-
-const sortList: <T>(
-  comparator: (a: T, b: T) => number,
-) => OperatorFunction<T[], T[]> = (comparator) => (source) =>
-  source.pipe(map((list) => [...list].sort(comparator)));
-
 export class GetPokemonsUseCase
   implements
     ICommandHandler<Pokemon[], LoadMorePokemonsCommand>,
@@ -46,16 +37,12 @@ export class GetPokemonsUseCase
 {
   private page = 1;
   private pageSize = 20;
-  private readonly pokemonList$$ = new BehaviorSubject<Map<string, Pokemon>>(
-    new Map<string, Pokemon>(),
-  );
+  private readonly pokemonList$$ = signal(new Map<string, Pokemon>());
 
-  public readonly pokemonList$: Observable<Pokemon[]> = this.pokemonList$$
-    .asObservable()
-    .pipe(
-      mapMapToArray(),
-      sortList((a, b) => a.order - b.order),
-    );
+  public readonly pokemonList$: Signal<Pokemon[]> = computed(() => {
+    const pokemonMap = this.pokemonList$$();
+    return mapToArray<Pokemon>()(pokemonMap).sort((a, b) => a.order - b.order);
+  });
 
   constructor(
     private readonly pokemonRepository: PokemonRepository,
@@ -80,18 +67,18 @@ export class GetPokemonsUseCase
     );
 
     this.updatePokemonList(result);
-    const updatedList = mapToArray<Pokemon>()(this.pokemonList$$.getValue());
+    const updatedList = mapToArray<Pokemon>()(this.pokemonList$$());
     this.eventBus.publish(PokemonsUpdated.create(updatedList));
 
     return updatedList;
   }
 
   private updatePokemonList(result: Pokemon[]) {
-    const currentMap = this.pokemonList$$.getValue();
+    const currentMap = this.pokemonList$$();
     for (const pokemon of result) {
       currentMap.set(pokemon.name, pokemon);
     }
-    this.pokemonList$$.next(new Map<string, Pokemon>([...currentMap]));
+    this.pokemonList$$.set(new Map<string, Pokemon>([...currentMap]));
   }
 }
 
