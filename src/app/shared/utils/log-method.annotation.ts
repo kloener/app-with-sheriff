@@ -13,12 +13,18 @@ export const LogMethod: (
     }
     const originalMethod = descriptor.value;
     descriptor.value = function (...args: unknown[]): Result {
-      console.group(
-        `LogMethod/${String((target as object).constructor.name)}.${String(propertyKey)}`,
-      );
-      console[level](`call: ${String(propertyKey)}`, ...args);
+      const logPrefix = `LogMethod/${String((target as object).constructor.name)}.${String(propertyKey)}`;
+      console.group(logPrefix);
+      console[level](`${logPrefix}->call: ${String(propertyKey)}`, ...args);
       const result = originalMethod.apply(this, args);
-      console[level](`result:`, ...args, result);
+
+      if (result instanceof Promise) {
+        console.warn(
+          `${logPrefix}: should not return a Promise. Use LogAsyncMethod instead.`,
+        );
+      }
+
+      console[level](`${logPrefix}->result:`, ...args, result);
       console.groupEnd();
       return result;
     };

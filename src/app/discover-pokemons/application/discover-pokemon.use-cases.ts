@@ -7,8 +7,8 @@ import {
   PokemonLoaded,
   PokemonsUpdated,
 } from '@discover-pokemons/domain/events';
-import { LogAsyncMethod } from '@shared/application';
 import { ICommandHandler, IEventBus } from '@shared/domain';
+import { LogAsyncMethod } from '@shared/utils';
 import { Pokemon, PokemonRepository } from '../domain';
 
 class PokemonNotFoundError extends Error {

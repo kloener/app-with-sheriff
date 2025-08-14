@@ -1,10 +1,10 @@
-import { LogAsyncMethod } from '@shared/application/log-async-method.annotation';
 import {
   Command,
   ICommandBus,
   ICommandHandler,
   ICommandHandlerRegistry,
 } from '@shared/domain';
+import { LogAsyncMethod } from '@shared/utils';
 
 export class CommandNotFoundFor extends Error {
   constructor(commandName: string) {

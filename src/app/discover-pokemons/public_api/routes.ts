@@ -25,12 +25,16 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('../page').then((m) => m.DiscoverPokemonPage),
+          import('../page/discover-pokemon-page').then(
+            (m) => m.DiscoverPokemonPage,
+          ),
       },
       {
         path: 'details/:idOrName',
         loadComponent: () =>
-          import('../page').then((m) => m.DetailsPokemonPage),
+          import('../page/details-pokemon-page').then(
+            (m) => m.DetailsPokemonPage,
+          ),
       },
     ],
   },

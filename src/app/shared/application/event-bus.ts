@@ -5,7 +5,7 @@ import {
   IEventBus,
   IEventHandlerRegistry,
 } from '@shared/domain';
-import { LogMethod } from './log-method.annotation';
+import { LogMethod } from '@shared/utils';
 
 export class EventBus implements IEventBus, IEventHandlerRegistry {
   private readonly handlers = new Map<string, IDomainEventHandler[]>();

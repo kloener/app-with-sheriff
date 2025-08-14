@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PokemonList } from '@discover-pokemons/presentation';
+import { PokemonList } from '@discover-pokemons/presentation/pokemon-list';
 
 @Component({
   selector: 'app-discover-pokemon-page',

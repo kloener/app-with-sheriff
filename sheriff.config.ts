@@ -1,4 +1,4 @@
-import { sameTag, SheriffConfig } from '@softarc/sheriff-core';
+import { anyTag, sameTag, SheriffConfig } from '@softarc/sheriff-core';
 
 /**
  * Clean Architecture Configuration for Sheriff
@@ -26,12 +26,22 @@ export const config: SheriffConfig = {
      *   - ./page (domain:bookings, type:page)
      *   - ./public_api (domain:bookings, type:public_api)
      */
-    'src/app/<domain>/application/commands': [
-      'domain:<domain>',
-      'type:application',
-    ],
-    'src/app/<domain>/domain/events': ['domain:<domain>', 'type:domain'],
-    'src/app/<domain>/<type>': ['domain:<domain>', 'type:<type>'],
+    'src/app/<domain>': {
+      // src/app/bookings/infrastructure
+      '<type>': ['domain:<domain>', 'type:<type>'],
+      // src/app/bookings/domain/events
+      '<type>/<subType>': [
+        'domain:<domain>',
+        'type:<type>',
+        'subType:<subType>',
+      ],
+      // src/app/presentation/infrastructure
+      '<type>/<subType>/<subFolder>': [
+        'domain:<domain>',
+        'type:<type>',
+        'subType:<subType>',
+      ],
+    },
   },
   depRules: {
     /**
@@ -73,7 +83,7 @@ export const config: SheriffConfig = {
       sameTag,
       'type:domain',
       'type:application',
-      'type:public_api', // FIXME currently only needed for integration-tests.
+      'type:public_api', // Note, currently only needed for integration-tests.
       'type:ui',
       'type:utils',
     ],
@@ -84,7 +94,7 @@ export const config: SheriffConfig = {
       'type:presentation',
       'type:domain',
       'type:application',
-      'type:public_api', // FIXME currently only needed for integration-tests.
+      'type:public_api', // Note, currently only needed for integration-tests.
       'type:ui',
       'type:utils',
     ],
@@ -96,6 +106,8 @@ export const config: SheriffConfig = {
      * Utils Layer containing utility functions and shared logic.
      */
     'type:utils': [sameTag, 'type:domain'],
+
+    'subType:*': [anyTag],
 
     root: ['domain:*', 'type:public_api', 'type:page'],
   },
